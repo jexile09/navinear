@@ -1,59 +1,29 @@
-// const Home = () => {
-//   return (
-//     <div className="flex flex-col items-center justify-center h-screen text-center text-blue-700">
-//       <h1 className="text-4xl font-bold">
-//         Welcome to UToledo Indoor Navigation
-//       </h1>
-//       <p className="text-lg mt-4">
-//         Easily find your way around the North Engineering Building.
-//       </p>
-//     </div>
-//   );
-// };
-
-// export default Home;
-
-// src/pages/Home.tsx
-import React from "react";
 import { Link } from "react-router-dom";
-import { ToledoColors } from "../components/ColorScheme";
 
-const Home: React.FC = () => {
+export default function Home() {
   return (
-    <div className="text-center py-12">
-      <h1
-        className="text-4xl font-bold mb-6"
-        style={{ color: ToledoColors.primary }}
-      >
-        University of Toledo Indoor Navigation
-      </h1>
-      <p className="mb-8 text-xl" style={{ color: ToledoColors.text }}>
-        Easily navigate our campus buildings with our interactive map system
-      </p>
-      <div className="flex justify-center space-x-6">
-        <Link
-          to="/maps"
-          className="px-6 py-3 rounded-lg text-lg font-semibold transition duration-300"
-          style={{
-            backgroundColor: ToledoColors.secondary,
-            color: ToledoColors.primary,
-          }}
-        >
-          View Campus Maps
-        </Link>
-        <Link
-          to="/office-hours"
-          className="px-6 py-3 rounded-lg text-lg font-semibold transition duration-300"
-          style={{
-            backgroundColor: ToledoColors.primary,
-            color: ToledoColors.secondary,
-          }}
-        >
-          Check Office Hours
-        </Link>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-900 text-white">
+      <div className="w-full max-w-3xl p-6 text-center bg-blue-800 shadow-lg rounded-2xl">
+        <h1 className="text-4xl font-bold text-yellow-400 mb-4">
+          Welcome to NaviNear
+        </h1>
+        <p className="text-lg text-gray-300 mb-6">
+          Your go-to solution for seamless navigation inside UToledo's North
+          Engineering building.
+        </p>
+        <div className="flex justify-center gap-4">
+          <Link to="/maps">
+            <button className="bg-yellow-400 text-blue-900 px-4 py-2 rounded-lg hover:bg-yellow-500">
+              Explore Maps
+            </button>
+          </Link>
+          <Link to="/office-hours">
+            <button className="bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-gray-300">
+              Office Hours
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
-};
-
-export default Home;
+}
