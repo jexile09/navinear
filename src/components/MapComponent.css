@@ -1,0 +1,84 @@
+   html,
+   body {
+     margin: 0;
+     padding: 0;
+     overflow-x: hidden;
+     width: 100vw;
+     height: 100vh;
+   }
+   
+   .map-container {
+     background-color: #00274C;
+     color: white;
+     padding: 2rem 1rem;
+     display: flex;
+     flex-direction: column;
+     align-items: center; 
+     justify-content: flex-start; 
+     min-height: 70vh;
+   }
+   
+   .fullscreen-mode {
+     position: fixed;
+     inset: 0;
+     width: 100vw;
+     height: 100vh;
+     padding: 0;
+     background-color: white;
+     z-index: 9999;
+   }
+   
+   .map-content-wrapper {
+     width: 100%;
+     max-width: 700px;
+     margin-bottom: 2rem;
+   }
+   
+   .form-controls {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 1rem;
+   }
+   
+   .select-box {
+     width: 100%;
+   }
+   
+   .find-path-button {
+     background-color: #FFCB05;
+     color: #00274C;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 6px;
+     font-weight: bold;
+     cursor: pointer;
+   }
+   
+   .find-path-button:hover {
+     background-color: #ffd100;
+   }
+   
+   .map-view {
+     width: 100%;
+     max-width: 1200px;
+     border-radius: 20px;
+     overflow: hidden;
+     cursor: pointer;
+   }
+   
+   .exit-fullscreen {
+     position: absolute;
+     top: 1rem;
+     right: 1rem;
+     background: rgba(255, 255, 255, 0.9);
+     color: #00274C;
+     font-size: 1.5rem;
+     font-weight: bold;
+     border: none;
+     border-radius: 50%;
+     padding: 0.5rem 0.8rem;
+     cursor: pointer;
+     z-index: 10000;
+   }
+   

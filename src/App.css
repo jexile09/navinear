@@ -39,4 +39,37 @@
 
 .read-the-docs {
   color: #888;
+} 
+
+/* ➕ Added: Better spacing for the Campus Maps section */
+/* Page wrapper */
+.maps-wrapper {
+  background-color: #00274D;
+  color: white;
+  padding: 60px 40px;
 }
+
+.maps-header-left {
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  text-align: left;
+}
+
+.maps-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.maps-instruction {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.maps-form-left {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+

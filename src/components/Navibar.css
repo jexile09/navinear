@@ -1,0 +1,38 @@
+/* Navibar.css */
+
+.nav-container {
+    background-color: #f5f5f5; /* same as ToledoColors.background */
+    padding: 1rem 2rem;
+    border-bottom: 3px solid #00274C;
+  }
+  
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-title {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .nav-logo {
+    font-size: 3 rem;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+  }
+  
+  .nav-subtitle {
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  

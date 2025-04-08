@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./OfficeHours.css";
 
 interface Professor {
   id: number;
@@ -17,6 +18,11 @@ const OfficeHours: React.FC = () => {
   const [filter, setFilter] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Form state
+  const [studentName, setStudentName] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [timeSlot, setTimeSlot] = useState("");
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/api/professors")
@@ -40,110 +46,137 @@ const OfficeHours: React.FC = () => {
   const filteredOfficeHours = professors.filter((entry) => {
     const dayMatch =
       filter === "All" ||
-      entry.office_hours
-        ?.toLowerCase()
-        .includes(filter.toLowerCase().slice(0, 3));
+      entry.office_hours?.toLowerCase().includes(filter.toLowerCase().slice(0, 3));
     const nameMatch = entry.name.toLowerCase().includes(search.toLowerCase());
     return dayMatch && nameMatch;
   });
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedId || !studentName || !studentEmail || !timeSlot) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const appointment = {
+      professor_id: selectedId,
+      student_name: studentName,
+      student_email: studentEmail,
+      time_slot: timeSlot,
+    };
+
+    const res = await fetch("http://127.0.0.1:5000/api/students", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(appointment),
+    });
+
+    if (res.ok) {
+      alert("Appointment submitted!");
+      setStudentName("");
+      setStudentEmail("");
+      setTimeSlot("");
+    } else {
+      alert("Submission failed.");
+    }
+  };
+
   return (
-    <div className="p-6 bg-[#00274C] min-h-screen text-white font-sans">
-      <h2 className="text-3xl font-bold text-yellow-200 mb-4">
-        Professor Office Hours
-      </h2>
+    <div className="office-hours-wrapper">
+      <div className="office-hours-container">
+        {/* Left Section - Professor Info */}
+        <div className="professor-info">
+          <h2>Professor Office Hours</h2>
+          <select
+            value={selectedId ?? ""}
+            onChange={(e) => setSelectedId(Number(e.target.value) || null)}
+          >
+            <option value="">-- Select a Professor --</option>
+            {professors.map((prof) => (
+              <option key={prof.id} value={prof.id}>
+                {prof.name}
+              </option>
+            ))}
+          </select>
 
-      {/* Dropdown Selector */}
-      <div className="mb-6 max-w-md">
-        <label className="block mb-1 text-white">
-          Quick Jump to Professor:
-        </label>
-        <select
-          value={selectedId ?? ""}
-          onChange={(e) => setSelectedId(Number(e.target.value) || null)}
-          className="p-2 rounded-lg text-black w-full"
-        >
-          <option value="">-- Select a Professor --</option>
-          {professors.map((prof) => (
-            <option key={prof.id} value={prof.id}>
-              {prof.name}
-            </option>
-          ))}
-        </select>
-      </div>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="All">All Days</option>
+            <option value="Mon">Monday</option>
+            <option value="Tue">Tuesday</option>
+            <option value="Wed">Wednesday</option>
+            <option value="Thu">Thursday</option>
+            <option value="Fri">Friday</option>
+          </select>
 
-      {/* Selected Professor Info */}
-      {selectedProfessor && (
-        <div className="bg-white text-black rounded-lg shadow-md p-6 max-w-md mb-8">
-          <h3 className="text-xl font-semibold text-blue-700 mb-2">
-            {selectedProfessor.name}
-          </h3>
-          <p>
-            <strong>Office:</strong> {selectedProfessor.office || "TBD"}
-          </p>
-          <p>
-            <strong>Office Hours:</strong>{" "}
-            {selectedProfessor.office_hours || "Not available"}
-          </p>
-          <p>
-            <strong>Email:</strong> {selectedProfessor.email}
-          </p>
-          <p>
-            <strong>Phone:</strong> {selectedProfessor.phone || "N/A"}
-          </p>
-          <p>
-            <strong>Course:</strong> {selectedProfessor.course_id || "N/A"}
-          </p>
-        </div>
-      )}
+          <input
+            type="text"
+            placeholder="Search professor name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6 max-w-xl">
-        <input
-          type="text"
-          placeholder="Search professor name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="p-2 border rounded-lg text-black w-full sm:w-1/2"
-        />
-
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="p-2 border rounded-lg text-black w-full sm:w-1/2"
-        >
-          <option value="All">All Days</option>
-          <option value="Mon">Monday</option>
-          <option value="Tue">Tuesday</option>
-          <option value="Wed">Wednesday</option>
-          <option value="Thu">Thursday</option>
-          <option value="Fri">Friday</option>
-        </select>
-      </div>
-
-      {/* Office Hours List */}
-      {loading ? (
-        <p className="text-gray-300">Loading professors...</p>
-      ) : error ? (
-        <p className="text-red-400">{error}</p>
-      ) : (
-        <ul className="bg-yellow-100 text-blue-900 p-4 rounded-lg shadow-md max-w-3xl">
-          {filteredOfficeHours.length > 0 ? (
-            filteredOfficeHours.map((prof) => (
-              <li key={prof.id} className="text-lg mb-3">
-                <strong>{prof.name}</strong> –{" "}
-                {prof.office_hours || "Office hours not available"}
-              </li>
-            ))
-          ) : (
-            <li className="text-red-500 text-lg">No matches found</li>
+          {selectedProfessor && (
+            <div className="professor-card">
+              <h3>{selectedProfessor.name}</h3>
+              <p><strong>Office:</strong> {selectedProfessor.office || "TBD"}</p>
+              <p><strong>Office Hours:</strong> {selectedProfessor.office_hours || "Not available"}</p>
+              <p><strong>Email:</strong> {selectedProfessor.email}</p>
+              <p><strong>Phone:</strong> {selectedProfessor.phone || "N/A"}</p>
+              <p><strong>Course:</strong> {selectedProfessor.course_id || "N/A"}</p>
+            </div>
           )}
-        </ul>
-      )}
 
-      {/* <footer className="mt-12 text-sm text-gray-300">
-        © 2025 UToledo Indoor Navigation
-      </footer> */}
+          {loading ? (
+            <p className="text-gray-500">Loading professors...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <ul className="professor-list">
+              {filteredOfficeHours.length > 0 ? (
+                filteredOfficeHours.map((prof) => (
+                  <li key={prof.id}>
+                    <strong>{prof.name}</strong> – {prof.office_hours || "No hours available"}
+                  </li>
+                ))
+              ) : (
+                <li className="text-red-500">No matches found</li>
+              )}
+            </ul>
+          )}
+        </div>
+
+        {/* Right Section - Appointment Form */}
+        <div className="student-form">
+          <h2>Book Appointment</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Your Name"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Your Email"
+              value={studentEmail}
+              onChange={(e) => setStudentEmail(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Preferred Time Slot (e.g. Tue 2:15 PM)"
+              value={timeSlot}
+              onChange={(e) => setTimeSlot(e.target.value)}
+              required
+            />
+            <button type="submit">Submit Appointment</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

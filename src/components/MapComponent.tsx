@@ -1,10 +1,26 @@
-import { useState } from "react";
+// MapComponent.tsx
+
+import { useState, useEffect } from "react";
+import Select, { StylesConfig } from "react-select";
 import { MapView, useMapData, useMap, Label } from "@mappedin/react-sdk";
 import "@mappedin/react-sdk/lib/esm/index.css";
+import "./MapComponent.css";
+
+interface OptionType {
+  label: string;
+  value: string;
+}
+
+interface NavigationAPI {
+  draw: (directions: unknown) => void;
+}
+
+interface CustomMapView {
+  Navigation: NavigationAPI;
+}
 
 function MyCustomComponent() {
   const { mapData } = useMap();
-
   return (
     <>
       {mapData?.getByType("space")?.map((space) => (
@@ -14,6 +30,19 @@ function MyCustomComponent() {
   );
 }
 
+const customStyles: StylesConfig<OptionType, false> = {
+  control: (base) => ({ ...base, backgroundColor: "white", color: "black" }),
+  menu: (base) => ({ ...base, backgroundColor: "white", color: "black" }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isFocused ? "#e2e8f0" : "white",
+    color: "black",
+  }),
+  singleValue: (base) => ({ ...base, color: "black" }),
+  input: (base) => ({ ...base, color: "black" }),
+  placeholder: (base) => ({ ...base, color: "gray" }),
+};
+
 export default function MapComponent() {
   const { isLoading, error, mapData } = useMapData({
     key: "mik_W8fMx1wWJyjevBMlt556607d1",
@@ -21,83 +50,95 @@ export default function MapComponent() {
     mapId: "67d6048435a08c000b263e28",
   });
 
-  const [startLocation, setStartLocation] = useState("");
-  const [endLocation, setEndLocation] = useState("");
-  const [mapView, setMapView] = useState<any>(null); // Store the MapView instance
+  const [mapView, setMapView] = useState<CustomMapView | null>(null);
+  const [startLocation, setStartLocation] = useState<OptionType | null>(null);
+  const [endLocation, setEndLocation] = useState<OptionType | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Function to find and draw a path between two locations
+  const allSpaces = mapData?.getByType("space") ?? [];
+  const spaceOptions: OptionType[] = allSpaces
+    .filter((space) => space.name?.trim())
+    .map((space) => ({ label: space.name, value: space.name }));
+
   const handleFindPath = async () => {
-    if (!mapData || !mapView) return;
-
-    // Find start and destination spaces
-    const start = mapData
-      .getByType("space")
-      .find(
-        (space) => space.name.toLowerCase() === startLocation.toLowerCase()
-      );
-
-    const destination = mapData
-      .getByType("space")
-      .find((space) => space.name.toLowerCase() === endLocation.toLowerCase());
-
-    if (!start || !destination) {
-      alert("Start or End location not found.");
-      return;
-    }
-
-    try {
-      // Fetch navigation path
-      const directions = await mapData.getDirections(start, destination);
-
-      if (!directions) {
-        alert("Could not retrieve path.");
-        return;
-      }
-
-      // Draw navigation path on the map
+    if (!mapData || !mapView || !startLocation || !endLocation) return;
+    const start = allSpaces.find((s) => s.name === startLocation.value);
+    const end = allSpaces.find((s) => s.name === endLocation.value);
+    if (start && end) {
+      const directions = await mapData.getDirections(start, end);
       mapView.Navigation.draw(directions);
-    } catch (error) {
-      console.error("Error fetching directions:", error);
     }
   };
+
+  useEffect(() => {
+    document.body.style.overflow = isFullscreen ? "hidden" : "auto";
+  }, [isFullscreen]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   return mapData ? (
-    <div>
-      {/* Input fields for user to enter start and end locations */}
-      <div className="p-4">
-        <input
-          type="text"
-          placeholder="Enter start location..."
-          value={startLocation}
-          onChange={(e) => setStartLocation(e.target.value)}
-          className="p-2 border rounded-lg w-full mb-2"
-        />
-        <input
-          type="text"
-          placeholder="Enter destination..."
-          value={endLocation}
-          onChange={(e) => setEndLocation(e.target.value)}
-          className="p-2 border rounded-lg w-full mb-2"
-        />
-        <button
-          onClick={handleFindPath}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-        >
-          Find Path
-        </button>
-      </div>
+    <div className={`map-container ${isFullscreen ? "fullscreen-mode" : ""}`}>
+      {!isFullscreen && (
+        <div className="map-content-wrapper">
+          <div className="form-controls">
+            <Select
+              options={spaceOptions}
+              value={startLocation}
+              onChange={(option) => setStartLocation(option)}
+              placeholder="Select Start Location"
+              isSearchable
+              styles={customStyles}
+              className="select-box"
+            />
+            <Select
+              options={spaceOptions}
+              value={endLocation}
+              onChange={(option) => setEndLocation(option)}
+              placeholder="Select Destination"
+              isSearchable
+              styles={customStyles}
+              className="select-box"
+            />
+            <button onClick={handleFindPath} className="find-path-button">
+              Find Path
+            </button>
+          </div>
+        </div>
+      )}
 
-      {/* Render MapView and store reference to it */}
-      <MapView
-        mapData={mapData}
-        style={{ height: "70vh", width: "100%" }}
-        onLoad={(mapInstance) => setMapView(mapInstance)} // Save MapView instance
+      <div
+        className="map-view"
+        onClick={() => setIsFullscreen(true)}
+        style={{
+          height: isFullscreen ? "100vh" : "70vh",
+          width: isFullscreen ? "100vw" : "100%",
+          position: isFullscreen ? "fixed" : "relative",
+          top: isFullscreen ? 0 : undefined,
+          left: isFullscreen ? 0 : undefined,
+          zIndex: isFullscreen ? 9999 : undefined,
+          borderRadius: isFullscreen ? 0 : "20px",
+        }}
       >
-        <MyCustomComponent />
-      </MapView>
+        {isFullscreen && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFullscreen(false);
+            }}
+            className="exit-fullscreen"
+          >
+            ✕
+          </button>
+        )}
+        <MapView
+          mapData={mapData}
+          style={{ height: "100%", width: "100%" }}
+          onLoad={(instance) => setMapView(instance as CustomMapView)}
+        >
+          <MyCustomComponent />
+        </MapView>
+      </div>
     </div>
   ) : null;
 }
