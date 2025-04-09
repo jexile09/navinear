@@ -1,60 +1,75 @@
-/* OfficeHoursPage.css */
-
 .office-hours-wrapper {
-    background-color: #00274C;
-    color: white;
-    min-height: 100vh;
-    padding: 2rem;
-  }
-  
-  .office-hours-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-wrap: wrap; /* Responsive support */
-  }
-  
-  .professor-info, .student-form {
-    flex: 1;
-    min-width: 300px;
-    background: white;
-    color: black;
-    padding: 2rem; /* Increased for more space inside */
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  }
-  
-  .professor-info h2, .student-form h2 {
-    color: #00274C;
-    margin-bottom: 1rem;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    margin-top: 0.5rem; /* optional: space from label */
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-  
-  button {
-    background-color: #FFCB05;
-    color: #00274C;
-    font-weight: bold;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #ffd100;
-  }
-  
+  background-color: #00274C;
+  color: white;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.office-hours-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.professor-info,
+.student-form {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.professor-info h2,
+.student-form h2 {
+  color: #00274C;
+  margin-bottom: 1rem;
+}
+
+input,
+select,
+.custom-datepicker {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+
+button {
+  background-color: #FFCB05;
+  color: #00274C;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #ffd100;
+}
+
+.selected-professor-banner {
+  background-color: #e6f4ff;
+  color: #00274C;
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid #007acc;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
