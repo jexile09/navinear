@@ -3,7 +3,7 @@
 .nav-container {
     background-color: #f5f5f5; /* same as ToledoColors.background */
     padding: 1rem 2rem;
-    border-bottom: 3px solid #00274C;
+    border-bottom: 15px solid #00274C;
   }
   
   .nav-inner {
@@ -35,4 +35,4 @@
     font-weight: 500;
     font-size: 0.95rem;
   }
-  
+
