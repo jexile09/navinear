@@ -124,6 +124,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
+
 const images = [
   "/images/Screenshot 1.png",
   "/images/Screenshot 2.png",
