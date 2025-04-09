@@ -1,7 +1,7 @@
-/* Navibar.css */
+/*Navibar.css*/
 
-.nav-container {
-    background-color: #f5f5f5; /* same as ToledoColors.background */
+  .nav-container {
+    background-color: #f5f5f5; 
     padding: 1rem 2rem;
     border-bottom: 3px solid #00274C;
   }
@@ -35,4 +35,7 @@
     font-weight: 500;
     font-size: 0.95rem;
   }
+   
+
+
   
