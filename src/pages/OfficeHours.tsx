@@ -1,9 +1,12 @@
+// src/pages/OfficeHours.tsx
+// Import React and necessary hooks
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { parse, format } from "date-fns";
-import "./OfficeHours.css";
+import DatePicker from "react-datepicker"; // Date picker component
+import "react-datepicker/dist/react-datepicker.css"; // Date picker styles
+import { parse, format } from "date-fns"; // Date parsing and formatting utilities
+import "./OfficeHours.css"; // Component-specific CSS
 
+// Interface for professor data
 interface Professor {
   id: number;
   name: string;
@@ -14,12 +17,15 @@ interface Professor {
   course_id: string | null;
 }
 
+// Interface for student appointment data
 interface Appointment {
   professor_id: number;
   time_slot: string;
 }
 
+// Main OfficeHours component
 const OfficeHours: React.FC = () => {
+  // State variables
   const [professors, setProfessors] = useState<Professor[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(null);
@@ -30,8 +36,9 @@ const OfficeHours: React.FC = () => {
   const [studentEmail, setStudentEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [takenSlots, setTakenSlots] = useState<string[]>([]);
+  const [takenSlots, setTakenSlots] = useState<string[]>([]); // List of already-booked time slots
 
+  // Load professor data from backend on first render
   useEffect(() => {
     fetch("http://127.0.0.1:5000/api/professors")
       .then((res) => {
@@ -49,24 +56,22 @@ const OfficeHours: React.FC = () => {
       });
   }, []);
 
+  // Fetch taken time slots for selected professor and date
   useEffect(() => {
     if (selectedId && appointmentDate) {
       const dateStr = format(appointmentDate, "yyyy-MM-dd");
       fetch(`http://127.0.0.1:5000/api/appointments/${selectedId}/${dateStr}`)
         .then(res => res.json())
         .then((data: Appointment[]) => {
-          const taken = data.map(a => {
-            const timePart = a.time_slot.split(" ")[1]; // e.g., "13:30"
-            const parsed = parse(timePart, "H:mm", new Date()); // parse as 24h time
-            return format(parsed, "h:mm a"); // convert to same format as timeOptions
-          });
+          const taken = data.map(a => a.time_slot.split(" ").slice(1).join(" "));
           setTakenSlots(taken);
         });
     }
-  }, [selectedId, appointmentDate]);  
+  }, [selectedId, appointmentDate]);
 
   const selectedProfessor = professors.find((p) => p.id === selectedId);
 
+  // Parse office hours string into usable format: { Monday: [["9:00am", "11:00am"]] }
   const getValidDaysAndSlots = (hours: string | null): Record<string, [string, string][]> => {
     if (!hours) return {};
     const result: Record<string, [string, string][]> = {};
@@ -82,8 +87,8 @@ const OfficeHours: React.FC = () => {
         const ranges: [string, string][] = [];
 
         timeMatches.forEach(m => {
-          const start = (m[1] + (m[2] || m[6])).toLowerCase();
-          const end = (m[5] + m[6]).toLowerCase();
+          const start = (m[1] + (m[2] || m[6])).toLowerCase(); // build start time
+          const end = (m[5] + m[6]).toLowerCase(); // build end time
           ranges.push([start, end]);
         });
 
@@ -98,6 +103,7 @@ const OfficeHours: React.FC = () => {
     return result;
   };
 
+  // Generate time slots in 15-min intervals between start and end
   const generateTimeSlots = (start: string, end: string): string[] => {
     const base = new Date();
     const startTime = parse(start, "h:mma", base);
@@ -112,6 +118,7 @@ const OfficeHours: React.FC = () => {
     return slots;
   };
 
+  // Generate and set time slot options when a professor and date are selected
   useEffect(() => {
     if (selectedProfessor && appointmentDate) {
       const parsed = getValidDaysAndSlots(selectedProfessor.office_hours);
@@ -120,18 +127,19 @@ const OfficeHours: React.FC = () => {
       if (ranges) {
         const slots = ranges
           .flatMap(([s, e]) => generateTimeSlots(s, e))
-          .filter(slot => !takenSlots.includes(slot))
           .sort((a, b) => {
             const base = new Date();
             return parse(a, "h:mm a", base).getTime() - parse(b, "h:mm a", base).getTime();
           });
+
         setTimeOptions(slots);
       } else {
         setTimeOptions([]);
       }
     }
-  }, [appointmentDate, selectedProfessor, takenSlots]);
+  }, [appointmentDate, selectedProfessor]);
 
+  // Submit the appointment form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedId || !studentName || !studentEmail || !appointmentDate || !timeSlot || !reason) {
@@ -155,6 +163,7 @@ const OfficeHours: React.FC = () => {
 
     if (res.ok) {
       alert("Appointment submitted!");
+      // Reset form
       setStudentName("");
       setStudentEmail("");
       setAppointmentDate(null);
@@ -165,6 +174,7 @@ const OfficeHours: React.FC = () => {
     }
   };
 
+  // Format office hours string to be human-readable
   const formatProfessorOfficeHours = (hours: string | null) => {
     const parsed = getValidDaysAndSlots(hours);
     return Object.entries(parsed)
@@ -175,8 +185,10 @@ const OfficeHours: React.FC = () => {
   return (
     <div className="office-hours-wrapper">
       <div className="office-hours-container">
+        {/* Left panel: professor information */}
         <div className="professor-info">
           <h2>Professor Office Hours</h2>
+          {/* Dropdown to select professor */}
           <select
             value={selectedId ?? ""}
             onChange={(e) => setSelectedId(Number(e.target.value) || null)}
@@ -187,8 +199,9 @@ const OfficeHours: React.FC = () => {
             ))}
           </select>
 
-          {loading ? <p className="text-gray-500">Loading professors...</p> :
-            error ? <p className="text-red-500">{error}</p> :
+          {/* Show loading, error, or professor info */}
+          {loading ? <p>Loading professors...</p> :
+            error ? <p>{error}</p> :
               selectedProfessor ? (
                 <div className="office-hours-text">
                   <p><strong>Office Location:</strong> {selectedProfessor.office}</p>
@@ -205,6 +218,7 @@ const OfficeHours: React.FC = () => {
               ) : <p>No professor selected</p>}
         </div>
 
+        {/* Right panel: student booking form */}
         <div className="student-form">
           <h2>Book Appointment</h2>
           {selectedProfessor && (
@@ -213,6 +227,7 @@ const OfficeHours: React.FC = () => {
             </div>
           )}
           <form onSubmit={handleSubmit}>
+            {/* Student name input */}
             <input
               type="text"
               placeholder="Full Name"
@@ -220,6 +235,7 @@ const OfficeHours: React.FC = () => {
               onChange={(e) => setStudentName(e.target.value)}
               required
             />
+            {/* Student email input */}
             <input
               type="email"
               placeholder="Student Email"
@@ -227,6 +243,7 @@ const OfficeHours: React.FC = () => {
               onChange={(e) => setStudentEmail(e.target.value)}
               required
             />
+            {/* Professor dropdown (again for form context) */}
             <select
               value={selectedId ?? ""}
               onChange={(e) => setSelectedId(Number(e.target.value) || null)}
@@ -237,32 +254,53 @@ const OfficeHours: React.FC = () => {
                 <option key={prof.id} value={prof.id}>{prof.name}</option>
               ))}
             </select>
+            {/* Date picker for appointment date */}
             <div className="datepicker-wrapper">
               <DatePicker
                 selected={appointmentDate}
                 onChange={(date) => setAppointmentDate(date)}
                 placeholderText="-- Select a date --"
-                minDate={new Date()}
+                minDate={new Date()} // Disable past dates
                 filterDate={(date) => {
                   const day = format(date, "EEEE");
                   const parsed = getValidDaysAndSlots(selectedProfessor?.office_hours ?? "");
-                  return parsed[day] !== undefined;
+                  return parsed[day] !== undefined; // Only allow dates matching professor's schedule
                 }}
                 className="custom-datepicker"
                 required
               />
             </div>
 
+            {/* Time slot dropdown */}
             <select
               value={timeSlot}
               onChange={(e) => setTimeSlot(e.target.value)}
               required
             >
               <option value="">-- Select a Time Slot --</option>
-              {timeOptions.map((slot, index) => (
-                <option key={index} value={slot}>{slot}</option>
-              ))}
+              {timeOptions.map((slot, index) => {
+                const now = new Date();
+                const selectedDateStr = format(appointmentDate ?? new Date(), "yyyy-MM-dd");
+                const todayStr = format(now, "yyyy-MM-dd");
+                const isToday = selectedDateStr === todayStr;
+
+                const slotTime = parse(slot, "h:mm a", new Date());
+                const isTaken = takenSlots.includes(slot);
+                const isPast = isToday && slotTime <= now;
+
+                return (
+                  <option
+                    key={index}
+                    value={slot}
+                    disabled={isTaken || isPast} // Disable taken or past time slots
+                  >
+                    {slot}
+                  </option>
+                );
+              })}
             </select>
+
+            {/* Reason for appointment dropdown */}
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value)}
@@ -274,6 +312,7 @@ const OfficeHours: React.FC = () => {
               <option value="Project Discussion">Project Discussion</option>
               <option value="Other">Other</option>
             </select>
+            {/* Submit button */}
             <button type="submit">Submit Appointment</button>
           </form>
         </div>

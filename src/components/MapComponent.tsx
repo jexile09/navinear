@@ -1,28 +1,33 @@
-// MapComponent.tsx
+// src/components/MapComponent.tsx
+// Import required hooks and components
+import { useState, useEffect } from "react"; // React hooks to manage component state and effects
+import Select, { StylesConfig } from "react-select"; // Custom dropdowns
+import { MapView, useMapData, useMap, Label } from "@mappedin/react-sdk"; // Mappedin SDK components to show the map and data.
+import "@mappedin/react-sdk/lib/esm/index.css"; // Mappedin styles
+import "./MapComponent.css"; // Custom CSS for the map
 
-import { useState, useEffect } from "react";
-import Select, { StylesConfig } from "react-select";
-import { MapView, useMapData, useMap, Label } from "@mappedin/react-sdk";
-import "@mappedin/react-sdk/lib/esm/index.css";
-import "./MapComponent.css";
-
+// Type for dropdown select options
 interface OptionType {
   label: string;
   value: string;
 }
 
+// Navigation API interface provided by Mappedin
 interface NavigationAPI {
   draw: (directions: unknown) => void;
 }
 
+// Custom map view type for accessing the Navigation API
 interface CustomMapView {
   Navigation: NavigationAPI;
 }
 
+// Component for labeling all spaces (rooms) on the map
 function MyCustomComponent() {
   const { mapData } = useMap();
   return (
     <>
+      {/* Loop through all spaces and render a label for each */}
       {mapData?.getByType("space")?.map((space) => (
         <Label key={space.id} target={space.center} text={space.name} />
       ))}
@@ -30,6 +35,7 @@ function MyCustomComponent() {
   );
 }
 
+// Custom styles for the react-select dropdown
 const customStyles: StylesConfig<OptionType, false> = {
   control: (base) => ({ ...base, backgroundColor: "white", color: "black" }),
   menu: (base) => ({ ...base, backgroundColor: "white", color: "black" }),
@@ -43,45 +49,57 @@ const customStyles: StylesConfig<OptionType, false> = {
   placeholder: (base) => ({ ...base, color: "gray" }),
 };
 
+// Main map component
 export default function MapComponent() {
+  // Load map data using Mappedin API credentials
   const { isLoading, error, mapData } = useMapData({
-    key: "ADD KEY HERE",
-    secret: "ADD SECRET HERE",
-    mapId: "ADD MAP ID",
+    key: "mik_W8fMx1wWJyjevBMlt556607d1",
+    secret: "mis_7jP7bMUYKfxM7BRujInCObPv5PvUwnHAk2NzNyIPJFF87fd1018",
+    mapId: "67d6048435a08c000b263e28"
   });
 
-  const [mapView, setMapView] = useState<CustomMapView | null>(null);
-  const [startLocation, setStartLocation] = useState<OptionType | null>(null);
-  const [endLocation, setEndLocation] = useState<OptionType | null>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  // State variables
+  const [mapView, setMapView] = useState<CustomMapView | null>(null); // Mappedin MapView instance
+  const [startLocation, setStartLocation] = useState<OptionType | null>(null); // Selected start location
+  const [endLocation, setEndLocation] = useState<OptionType | null>(null); // Selected destination
+  const [isFullscreen, setIsFullscreen] = useState(false); // Fullscreen toggle
 
+  // Get all spaces (rooms) from the map data
   const allSpaces = mapData?.getByType("space") ?? [];
+
+  // Convert spaces into dropdown format
   const spaceOptions: OptionType[] = allSpaces
-    .filter((space) => space.name?.trim())
+    .filter((space) => space.name?.trim()) // Ensure the space has a name
     .map((space) => ({ label: space.name, value: space.name }));
 
+  // Find and draw the navigation path between selected locations
   const handleFindPath = async () => {
     if (!mapData || !mapView || !startLocation || !endLocation) return;
     const start = allSpaces.find((s) => s.name === startLocation.value);
     const end = allSpaces.find((s) => s.name === endLocation.value);
     if (start && end) {
       const directions = await mapData.getDirections(start, end);
-      mapView.Navigation.draw(directions);
+      mapView.Navigation.draw(directions); // Draw the path on the map
     }
   };
 
+  // Disable background scroll when in fullscreen mode
   useEffect(() => {
     document.body.style.overflow = isFullscreen ? "hidden" : "auto";
   }, [isFullscreen]);
 
+  // Handle loading or error states
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
+  // Render map and form when map data is available
   return mapData ? (
     <div className={`map-container ${isFullscreen ? "fullscreen-mode" : ""}`}>
+      {/* Show dropdowns and button only when not in fullscreen */}
       {!isFullscreen && (
         <div className="map-content-wrapper">
           <div className="form-controls">
+            {/* Dropdown to select start location */}
             <Select
               options={spaceOptions}
               value={startLocation}
@@ -91,6 +109,7 @@ export default function MapComponent() {
               styles={customStyles}
               className="select-box"
             />
+            {/* Dropdown to select destination */}
             <Select
               options={spaceOptions}
               value={endLocation}
@@ -100,6 +119,7 @@ export default function MapComponent() {
               styles={customStyles}
               className="select-box"
             />
+            {/* Button to find path */}
             <button onClick={handleFindPath} className="find-path-button">
               Find Path
             </button>
@@ -107,9 +127,10 @@ export default function MapComponent() {
         </div>
       )}
 
+      {/* Map viewer container with dynamic fullscreen styling */}
       <div
         className="map-view"
-        onClick={() => setIsFullscreen(true)}
+        onClick={() => setIsFullscreen(true)} // Enable fullscreen on click
         style={{
           height: isFullscreen ? "100vh" : "70vh",
           width: isFullscreen ? "100vw" : "100%",
@@ -120,25 +141,29 @@ export default function MapComponent() {
           borderRadius: isFullscreen ? 0 : "20px",
         }}
       >
+        {/* Show exit button only in fullscreen mode */}
         {isFullscreen && (
           <button
             onClick={(e) => {
-              e.stopPropagation();
-              setIsFullscreen(false);
+              e.stopPropagation(); // Prevent click from bubbling
+              setIsFullscreen(false); // Exit fullscreen
             }}
             className="exit-fullscreen"
           >
             ✕
           </button>
         )}
+        {/* Render Mappedin interactive map */}
         <MapView
           mapData={mapData}
           style={{ height: "100%", width: "100%" }}
-          onLoad={(instance) => setMapView(instance as CustomMapView)}
+          onLoad={(instance) => setMapView(instance as CustomMapView)} // Store map instance
         >
+          {/* Add dynamic space labels to the map */}
           <MyCustomComponent />
         </MapView>
       </div>
     </div>
-  ) : null;
+  ) : null; // If mapData is not loaded, render nothing
 }
+

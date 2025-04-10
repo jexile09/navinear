@@ -1,11 +1,13 @@
+/* src/index.css */
+/* Global CSS Variables and Defaults */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: #ffffff;
-  background-color: #00274D; /* Toledo Blue */
+  color-scheme: light dark; /* Allow system theme adaptation */
+  color: #ffffff; /* Default text color (white for dark mode) */
+  background-color: #00274D; /* Toledo Blue as base background */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,31 +15,35 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Anchor tag styling */
 a {
   font-weight: 500;
-  color: #FFCB05; /* Toledo Gold */
-  text-decoration: inherit;
+  color: #FFCB05; /* Toledo Gold for links */
+  text-decoration: inherit; /* Inherit parent styles */
 }
 a:hover {
-  color: #FFD700;
+  color: #FFD700; /* Brighter gold on hover */
 }
 
+/* Base body styles */
 body {
   margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #00274D; /* Consistent Background */
-  color: #ffffff;
+  place-items: center; /* Center children vertically */
+  min-width: 320px; /* Responsive minimum width */
+  min-height: 100vh; /* Full viewport height */
+  background-color: #00274D; /* Consistent with root bg */
+  color: #ffffff; /* White text */
 }
 
+/* Main heading style */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #FFCB05; /* Gold headings */
+  color: #FFCB05; /* Toledo Gold for headings */
 }
 
+/* General button styling */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -45,30 +51,36 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #FFCB05; /* Gold buttons */
+  background-color: #FFCB05; /* Gold button background */
   color: #00274D; /* Blue text */
   cursor: pointer;
   transition: background-color 0.25s;
 }
+
+/* Button hover effect */
 button:hover {
-  background-color: #FFD700;
+  background-color: #FFD700; /* Lighter gold on hover */
 }
+
+/* Focus styling for accessibility */
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Light mode overrides (based on system preference) */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #00274D;
-    background-color: #ffffff;
+    color: #00274D;           /* Switch text to blue */
+    background-color: #ffffff; /* Light background */
   }
+
   a:hover {
-    color: #00274D;
+    color: #00274D; /* Blue on link hover in light mode */
   }
+
   button {
-    background-color: #FFCB05;
-    color: #00274D;
+    background-color: #FFCB05; /* Same gold button */
+    color: #00274D;            /* Consistent blue text */
   }
 }
-

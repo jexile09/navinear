@@ -1,15 +1,17 @@
+/* src/pages/Maps.css */
+/* Title styling for the map page */
 .map-title {
-    font-size: 3rem;
-    font-weight: 800;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  .map-subtitle {
-    font-size: 1.1rem;
-    color: #e0e0e0;
-    text-align: center;
-    margin-bottom: 0.5rem;
-  }
-  
+  font-size: 3rem;          /* Large, prominent title */
+  font-weight: 800;         /* Extra bold for emphasis */
+  margin-top: 2rem;         /* Space above the title */
+  margin-bottom: 1rem;      /* Space below the title */
+  text-align: center;       /* Center-align the title text */
+}
+
+/* Subtitle styling for the map page */
+.map-subtitle {
+  font-size: 1.1rem;        /* Slightly larger than normal text */
+  color: #e0e0e0;           /* Light gray for contrast on dark backgrounds */
+  text-align: center;       /* Center-align the subtitle */
+  margin-bottom: 0.5rem;    /* Space below the subtitle */
+}

@@ -1,42 +1,48 @@
+/* src/pages/OfficeHours.css */
+/* Wrapper for the entire Office Hours page */
 .office-hours-wrapper {
-  background-color: #00274C;
+  background-color: #00274C; /* UToledo primary blue */
   color: white;
-  min-height: 100vh;
-  padding: 2rem;
+  min-height: 100vh; /* Full height layout */
+  padding: 2rem; /* Outer padding */
 }
 
+/* Main container for content alignment */
 .office-hours-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 3rem;
+  flex-direction: row; /* Arrange child elements side-by-side */
+  justify-content: center; /* Center the content horizontally */
+  align-items: flex-start; /* Align items at the top */
+  gap: 3rem; /* Space between columns */
   max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  margin: 0 auto; /* Center container in page */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
+/* Styles for professor list and student form cards */
 .professor-info,
 .student-form {
-  flex: 1;
-  min-width: 300px;
-  background: white;
-  color: black;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  flex: 1; /* Equal width for both sides */
+  min-width: 300px; /* Ensure responsiveness */
+  background: white; /* Card background */
+  color: black; /* Text color */
+  padding: 2rem; /* Inner spacing */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
 }
 
+/* Headings inside cards */
 .professor-info h2,
 .student-form h2 {
-  color: #00274C;
+  color: #00274C; /* UToledo blue for titles */
   margin-bottom: 1rem;
 }
 
+/* Form input fields, dropdowns, and datepicker styling */
 input,
 select,
 .custom-datepicker {
-  width: 100% !important;
+  width: 100% !important; /* Full width inside form */
   padding: 0.75rem;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
@@ -44,33 +50,36 @@ select,
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
-  background-color: #111;
-  color: white;
+  background-color: #111; /* Dark input background */
+  color: white; /* Light input text */
 }
 
+/* Submit button styling */
 button {
-  background-color: #FFCB05;
-  color: #00274C;
+  background-color: #FFCB05; /* UToledo gold */
+  color: #00274C; /* Text in UToledo blue */
   font-weight: bold;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  width: 100%;
+  width: 100%; /* Full-width button */
   font-size: 1rem;
 }
 
+/* Hover effect for submit button */
 button:hover {
-  background-color: #ffd100;
+  background-color: #ffd100; /* Slightly brighter yellow on hover */
 }
 
+/* Highlight banner for selected professor */
 .selected-professor-banner {
-  background-color: #e6f4ff;
-  color: #00274C;
+  background-color: #e6f4ff; /* Light blue background */
+  color: #00274C; /* Dark blue text */
   font-weight: bold;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
-  border-left: 5px solid #007acc;
+  border-left: 5px solid #007acc; /* Accent stripe on the left */
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }

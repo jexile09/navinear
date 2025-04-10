@@ -1,10 +1,12 @@
 // src/components/Header.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { ToledoColors } from "./ColorScheme";
+import { ToledoColors } from "./ColorScheme"; // Import custom color scheme
 
+// Header component for top navigation bar
 const Header: React.FC = () => {
   return (
+    // Header section with padding and shadow, using custom background and text colors
     <header
       className="py-4 shadow-md"
       style={{
@@ -12,9 +14,14 @@ const Header: React.FC = () => {
         color: ToledoColors.secondary,
       }}
     >
+      {/* Navigation bar container with horizontal layout */}
       <nav className="container mx-auto flex justify-between items-center">
+        {/* Logo or title */}
         <div className="text-2xl font-bold">UT Indoor Navigation</div>
+
+        {/* Navigation links */}
         <ul className="flex space-x-6">
+          {/* Home Link */}
           <li>
             <Link
               to="/"
@@ -24,6 +31,8 @@ const Header: React.FC = () => {
               Home
             </Link>
           </li>
+
+          {/* Maps Link */}
           <li>
             <Link
               to="/maps"
@@ -33,6 +42,8 @@ const Header: React.FC = () => {
               Maps
             </Link>
           </li>
+
+          {/* Office Hours Link */}
           <li>
             <Link
               to="/office-hours"
@@ -48,4 +59,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default Header; // Export Header for use in layout or other components
