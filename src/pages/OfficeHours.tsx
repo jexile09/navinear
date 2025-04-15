@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // 🧠 Added to redirect
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parse, format } from "date-fns";
 import "./OfficeHours.css";
 
+// Interfaces
 interface Professor {
   id: number;
   name: string;
@@ -20,6 +22,18 @@ interface Appointment {
 }
 
 const OfficeHours: React.FC = () => {
+  const navigate = useNavigate();
+
+  // 👇 Protect route: redirect if not logged in
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      alert("Please login to access Office Hours.");
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  // State
   const [professors, setProfessors] = useState<Professor[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(null);
@@ -32,13 +46,14 @@ const OfficeHours: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [takenSlots, setTakenSlots] = useState<string[]>([]);
 
+  // Fetch professors
   useEffect(() => {
     fetch("http://127.0.0.1:5000/api/professors")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch professors");
         return res.json();
       })
-      .then((data: Professor[]) => {
+      .then((data) => {
         setProfessors(data);
         setLoading(false);
       })
@@ -49,21 +64,18 @@ const OfficeHours: React.FC = () => {
       });
   }, []);
 
+  // Fetch taken slots
   useEffect(() => {
     if (selectedId && appointmentDate) {
       const dateStr = format(appointmentDate, "yyyy-MM-dd");
       fetch(`http://127.0.0.1:5000/api/appointments/${selectedId}/${dateStr}`)
         .then(res => res.json())
         .then((data: Appointment[]) => {
-          const taken = data.map(a => {
-            const timePart = a.time_slot.split(" ")[1]; // e.g., "13:30"
-            const parsed = parse(timePart, "H:mm", new Date()); // parse as 24h time
-            return format(parsed, "h:mm a"); // convert to same format as timeOptions
-          });
+          const taken = data.map(a => a.time_slot.split(" ").slice(1).join(" "));
           setTakenSlots(taken);
         });
     }
-  }, [selectedId, appointmentDate]);  
+  }, [selectedId, appointmentDate]);
 
   const selectedProfessor = professors.find((p) => p.id === selectedId);
 
@@ -76,17 +88,14 @@ const OfficeHours: React.FC = () => {
     matches?.forEach(entry => {
       const dayMatch = entry.match(/(Monday|Tuesday|Wednesday|Thursday|Friday)/);
       const timeMatches = [...entry.matchAll(/(\d{1,2}:\d{2})(?:\s)?(am|pm)?(?:,\s*)?(\d{1,2}:\d{2})?(?:\s)?(am|pm)?-(\d{1,2}:\d{2})(?:\s)?(am|pm)/gi)];
-
       if (dayMatch && timeMatches.length) {
         const day = dayMatch[1];
         const ranges: [string, string][] = [];
-
         timeMatches.forEach(m => {
           const start = (m[1] + (m[2] || m[6])).toLowerCase();
           const end = (m[5] + m[6]).toLowerCase();
           ranges.push([start, end]);
         });
-
         if (result[day]) {
           result[day].push(...ranges);
         } else {
@@ -120,7 +129,6 @@ const OfficeHours: React.FC = () => {
       if (ranges) {
         const slots = ranges
           .flatMap(([s, e]) => generateTimeSlots(s, e))
-          .filter(slot => !takenSlots.includes(slot))
           .sort((a, b) => {
             const base = new Date();
             return parse(a, "h:mm a", base).getTime() - parse(b, "h:mm a", base).getTime();
@@ -130,7 +138,7 @@ const OfficeHours: React.FC = () => {
         setTimeOptions([]);
       }
     }
-  }, [appointmentDate, selectedProfessor, takenSlots]);
+  }, [appointmentDate, selectedProfessor]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -175,36 +183,28 @@ const OfficeHours: React.FC = () => {
   return (
     <div className="office-hours-wrapper">
       <div className="office-hours-container">
+        {/* Professor Info Panel */}
         <div className="professor-info">
           <h2>Professor Office Hours</h2>
-          <select
-            value={selectedId ?? ""}
-            onChange={(e) => setSelectedId(Number(e.target.value) || null)}
-          >
+          <select value={selectedId ?? ""} onChange={(e) => setSelectedId(Number(e.target.value) || null)}>
             <option value="">-- Select a Professor --</option>
             {professors.map((prof) => (
               <option key={prof.id} value={prof.id}>{prof.name}</option>
             ))}
           </select>
-
-          {loading ? <p className="text-gray-500">Loading professors...</p> :
-            error ? <p className="text-red-500">{error}</p> :
+          {loading ? <p>Loading professors...</p> :
+            error ? <p>{error}</p> :
               selectedProfessor ? (
                 <div className="office-hours-text">
                   <p><strong>Office Location:</strong> {selectedProfessor.office}</p>
-                  {selectedProfessor.office_hours ? (
-                    <p><strong>Office Hours:</strong><br />
-                      {formatProfessorOfficeHours(selectedProfessor.office_hours)
-                        .split("\n")
-                        .map((line, i) => <span key={i}>{line}<br /></span>)}
-                    </p>
-                  ) : (
-                    <p>No office hours available</p>
-                  )}
+                  <p><strong>Office Hours:</strong><br />
+                    {formatProfessorOfficeHours(selectedProfessor.office_hours).split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+                  </p>
                 </div>
               ) : <p>No professor selected</p>}
         </div>
 
+        {/* Booking Form Panel */}
         <div className="student-form">
           <h2>Book Appointment</h2>
           {selectedProfessor && (
@@ -213,25 +213,9 @@ const OfficeHours: React.FC = () => {
             </div>
           )}
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Student Email"
-              value={studentEmail}
-              onChange={(e) => setStudentEmail(e.target.value)}
-              required
-            />
-            <select
-              value={selectedId ?? ""}
-              onChange={(e) => setSelectedId(Number(e.target.value) || null)}
-              required
-            >
+            <input type="text" placeholder="Full Name" value={studentName} onChange={(e) => setStudentName(e.target.value)} required />
+            <input type="email" placeholder="Student Email" value={studentEmail} onChange={(e) => setStudentEmail(e.target.value)} required />
+            <select value={selectedId ?? ""} onChange={(e) => setSelectedId(Number(e.target.value) || null)} required>
               <option value="">-- Select a Professor --</option>
               {professors.map((prof) => (
                 <option key={prof.id} value={prof.id}>{prof.name}</option>
@@ -252,22 +236,24 @@ const OfficeHours: React.FC = () => {
                 required
               />
             </div>
-
-            <select
-              value={timeSlot}
-              onChange={(e) => setTimeSlot(e.target.value)}
-              required
-            >
+            <select value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} required>
               <option value="">-- Select a Time Slot --</option>
-              {timeOptions.map((slot, index) => (
-                <option key={index} value={slot}>{slot}</option>
-              ))}
+              {timeOptions.map((slot, index) => {
+                const now = new Date();
+                const selectedDateStr = format(appointmentDate ?? new Date(), "yyyy-MM-dd");
+                const todayStr = format(now, "yyyy-MM-dd");
+                const isToday = selectedDateStr === todayStr;
+                const slotTime = parse(slot, "h:mm a", new Date());
+                const isTaken = takenSlots.includes(slot);
+                const isPast = isToday && slotTime <= now;
+                return (
+                  <option key={index} value={slot} disabled={isTaken || isPast}>
+                    {slot}
+                  </option>
+                );
+              })}
             </select>
-            <select
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              required
-            >
+            <select value={reason} onChange={(e) => setReason(e.target.value)} required>
               <option value="">-- Reason for appointment --</option>
               <option value="Homework Help">Homework Help</option>
               <option value="Exam Review">Exam Review</option>

@@ -1,3 +1,5 @@
+/* src/components/MapComponent.css */
+/* Set default layout for full page and prevent horizontal scrolling */
 html,
 body {
   margin: 0;
@@ -7,81 +9,94 @@ body {
   height: 100vh;
 }
 
+/* Main container for the map UI, styled with UToledo's navy blue color */
 .map-container {
-  background-color: #00274C;
+  background-color: #00274C; /* UToledo Midnight Blue */
   color: white;
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 70vh;
+  min-height: 70vh; /* Ensure container fills most of the viewport */
 }
 
+/* Styles applied when map is in fullscreen mode */
 .fullscreen-mode {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   padding: 0;
-  background-color: white;
-  z-index: 9999;
+  background-color: white; /* Override background in fullscreen */
+  z-index: 9999; /* Stay on top of other elements */
 }
 
+/* Wrapper for content above the map, such as input forms */
 .map-content-wrapper {
   width: 100%;
-  max-width: 700px;
+  max-width: 700px; /* Limit width for readability */
   margin-bottom: 2rem;
 }
 
+/* Styles for form controls section */
 .form-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1rem; /* Space between controls */
 }
 
+/* Style for dropdown/select box */
 .select-box {
   width: 100%;
 }
 
+/* Button to trigger path-finding logic */
 .find-path-button {
-  background-color: #FFCB05;
-  color: #00274C;
+  background-color: #FFCB05; /* UToledo Gold */
+  color: #00274C;            /* UToledo Blue text */
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   width: auto;
-  max-width: 200px;       /* Optional: prevents it from being too wide */
+  max-width: 200px;       /* Prevent overly wide button */
   display: block;
-  margin: 0 auto;         /* Centers the button */
+  margin: 0 auto;         /* Center the button horizontally */
 }
 
+/* Hover effect for path-finding button */
 .find-path-button:hover {
-  background-color: #ffd100;
+  background-color: #ffd100; /* Slightly lighter gold on hover */
 }
 
+/* Container for the visual map display */
 .map-view {
   width: 100%;
   max-width: 1200px;
   border-radius: 20px;
-  overflow: hidden;
+  overflow: hidden; /* Hide overflow for rounded corners */
   cursor: pointer;
 }
 
+/* Button to exit fullscreen mode, styled like a floating "X" */
 .exit-fullscreen {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  color: #00274C;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 50%;
-  padding: 0.5rem 0.8rem;
-  cursor: pointer;
-  z-index: 10000;
+  position: absolute;        /* Position relative to the map-view container */
+  top: 1rem;                 
+  right: 1rem;               
+  background: rgba(255, 255, 255, 0.9); 
+  color: #00274C;            
+  font-size: 1.5rem;        
+  font-weight: bold;         
+  border: none;              
+  border-radius: 50%;        /* Make the button circular */
+  padding: 0.5rem 0.8rem;    
+  cursor: pointer;           /* Pointer cursor on hover */
+  z-index: 10000;            
+  width: auto;               
+  height: auto;             
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
+

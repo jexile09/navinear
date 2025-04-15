@@ -1,48 +1,106 @@
-# run command for the app: flask run
-from flask import Flask, jsonify
+# run with: flask run
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
-import os  # ✅ needed for path handling
- 
+import os
+
 app = Flask(__name__)
-CORS(app)  # allows React frontend to call backend
- 
-# ✅ Set path to database
+CORS(app, origins="http://localhost:5173", supports_credentials=True)
+
+# Set up the path to the SQLite database
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'campus_navigator.db')  # make sure this matches your file name
- 
-# ✅ Connect to your database using full path
+DB_PATH = os.path.join(BASE_DIR, 'campus_navigator.db')
+
+# Function to establish a database connection
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    conn.row_factory = sqlite3.Row  # Enables name-based access to columns
     return conn
- 
-# ✅ Main data route
+
+# Route to fetch all professors
 @app.route('/api/professors', methods=['GET'])
 def get_professors():
     conn = get_db_connection()
     rows = conn.execute('SELECT * FROM Professors').fetchall()
     conn.close()
-    return jsonify([dict(row) for row in rows])
+    return jsonify([dict(row) for row in rows])  # Convert rows to dictionary format for JSON
 
-# # 🔹 Route to get a single professor by ID
-# @app.route('/api/professors/<int:professor_id>', methods=['GET'])
-# def get_professor_by_id(professor_id):
-#     conn = get_db_connection()
-#     rows = conn.execute('SELECT id FROM Professors').fetchall()
-#     for prof in rows:
-#         if prof['id'] == professor_id:
-#             return jsonify(prof)
-#     return jsonify({'error': 'Professor not found'}), 404
+# Route to create a new student appointment
+@app.route('/api/students', methods=['POST'])
+def create_appointment():
+    data = request.get_json()
+    try:
+        # Extract appointment data from request
+        professor_id = data['professor_id']
+        student_name = data['student_name']
+        student_email = data['student_email']
+        time_slot = data['time_slot']
+        reason = data['reason']
+    except KeyError:
+        return jsonify({"error": "Missing fields"}), 400  # Bad request if any field is missing
 
-# # GET /api/rooms
-# @app.route('/api/rooms', methods=['GET'])
-# def get_professors():
-#     conn = get_db_connection()
-#     rows = conn.execute('SELECT * FROM Rooms').fetchall()
-#     conn.close()
-#     return jsonify([dict(row) for row in rows])
- 
-# ✅ Run the server
+    conn = get_db_connection()
+    try:
+        # Check for existing appointment to prevent double booking
+        existing = conn.execute(
+            'SELECT * FROM Appointment WHERE professor_id = ? AND time_slot = ?',
+            (professor_id, time_slot)
+        ).fetchone()
+        if existing:
+            conn.close()
+            return jsonify({"error": "This time slot is already booked."}), 409  # Conflict
+
+        # Insert new appointment
+        conn.execute(
+            'INSERT INTO Appointment (professor_id, student_name, student_email, time_slot, reason) VALUES (?, ?, ?, ?, ?)',
+            (professor_id, student_name, student_email, time_slot, reason)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Appointment created"}), 201  # Created successfully
+    except Exception as e:
+        conn.rollback()
+        conn.close()
+        return jsonify({"error": str(e)}), 500  # Internal server error
+
+# Route to fetch all taken appointment time slots for a specific professor on a specific date
+@app.route('/api/appointments/<int:professor_id>/<date>', methods=['GET'])
+def get_taken_appointments(professor_id, date):
+    conn = get_db_connection()
+    # Filter time slots by date prefix 
+    rows = conn.execute(
+        'SELECT time_slot FROM Appointment WHERE professor_id = ? AND time_slot LIKE ?',
+        (professor_id, f"{date}%")
+    ).fetchall()
+    conn.close()
+    return jsonify([dict(row) for row in rows])  # Return list of taken time slots
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
+    conn = get_db_connection()
+    user = conn.execute(
+        "SELECT * FROM Login WHERE username = ? AND password = ?",
+        (username, password)
+    ).fetchone()
+    conn.close()
+
+    if user:
+        return jsonify({
+            "message": "Login successful!",
+            "user": {"username": user["username"]}
+        }), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
+    
+@app.route('/api/ping', methods=['GET'])
+def ping():
+    return jsonify({"message": "pong"})
+
+    
+# Start the Flask development server
 if __name__ == '__main__':
     app.run(debug=True)
