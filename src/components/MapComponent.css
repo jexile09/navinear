@@ -100,3 +100,78 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
+/* Optional: Style the checkbox label
+.form-controls label {
+  font-size: 1rem;
+  font-weight: 500;
+} */
+
+/* --- Accessibility Checkbox Styling --- */
+
+.accessibility-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  padding-left: 2.2rem; /* space for checkbox */
+  color: white;
+}
+
+/* Hide default checkbox */
+.accessibility-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+
+/* Custom checkbox style */
+.accessibility-checkbox .checkmark {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border: 2px solid #FFCB05; 
+  border-radius: 4px;
+}
+
+/* Checkbox tick appearance when checked */
+/* Updated checkmark (tick) styling */
+.accessibility-checkbox input:checked ~ .checkmark:after {
+  display: block;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid black; 
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+
+/* Create the checkmark/tick */
+.accessibility-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.accessibility-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.accessibility-checkbox .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #FFCB05;
+  border-width: 0 2px 2px;
+  transform: rotate(45deg);
+}
