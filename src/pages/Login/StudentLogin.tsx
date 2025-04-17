@@ -1,10 +1,9 @@
-// src/pages/Login.tsx
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import "./Login.css";
+import "./StudentLogin.css";
 
-const Login: React.FC = () => {
+const StudentLogin: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,31 +15,26 @@ const Login: React.FC = () => {
       const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
-
       const data = await response.json();
 
       if (response.ok) {
         alert("✅ Login successful!");
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/"); // or wherever students should land
       } else {
         alert("❌ " + (data.error || "Login failed."));
       }
-    } catch (error) {
-      console.error("Login request failed:", error);
+    } catch (err) {
+      console.error("Login request failed:", err);
       alert("⚠️ Network error. Please try again.");
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleLogin();
-    }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleLogin();
   };
 
   const togglePasswordVisibility = () => {
@@ -48,9 +42,7 @@ const Login: React.FC = () => {
     if (passwordPeekTimeout.current) {
       clearTimeout(passwordPeekTimeout.current);
     }
-    passwordPeekTimeout.current = setTimeout(() => {
-      setShowPassword(false);
-    }, 3000);
+    passwordPeekTimeout.current = setTimeout(() => setShowPassword(false), 3000);
   };
 
   return (
@@ -65,7 +57,7 @@ const Login: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             onKeyDown={handleKeyDown}
             className="login-input"
           />
@@ -75,7 +67,7 @@ const Login: React.FC = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               onKeyDown={handleKeyDown}
               className="login-input password-input"
             />
@@ -93,6 +85,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
-
-
+export default StudentLogin;

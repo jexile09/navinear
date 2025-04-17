@@ -44,22 +44,20 @@
   font-size: 0.95rem;
 }
 
-/* Style for the login box */
-.login-box {
-  padding: 6px 14px;              /* Padding inside the button */
-  background-color: #FFD700;      /* Yellow background */
-  color: #000;                    /* Black text for contrast */
-  border-radius: 5px;             /* Rounded edges */
-  font-weight: bold;              /* Make text bold */
-  text-decoration: none;          /* No underline */
-  transition: background-color 0.3s;
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
+.logout-button {
+  background-color: #FFCC00; /* Bright yellow */
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #00274C;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
-/* Hover effect for Login button */
-.login-box:hover {
-  background-color: #FFC107;      /* Slightly darker yellow on hover */
+.logout-button:hover {
+  background-color: #e6b800;
+  cursor: pointer;
 }
+
 

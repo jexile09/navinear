@@ -1,9 +1,9 @@
 // src/pages/Home.tsx
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Home.css"; // Import the associated CSS styles
+import {UserCheck, GraduationCap } from "lucide-react";
+import "./Home.css";
 
-// Array of image paths used in the carousel
 const images = [
   "/images/Screenshot 1.png",
   "/images/Screenshot 2.png",
@@ -13,60 +13,64 @@ const images = [
   "/images/Screenshot 6.png",
 ];
 
-// Main Home component
-export default function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0); // Track current image index
+const Home: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Move to next image (wraps to first if at the end)
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  // Move to previous image (wraps to last if at the beginning)
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
-
-  // Auto-slide to the next image every 5 seconds
+  // Auto‑advance carousel every 5s
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, []);
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []); // ← no images.length dependency needed
+
+  const prevSlide = () =>
+    setCurrentIndex((i) => (i - 1 + images.length) % images.length);
+  const nextSlide = () =>
+    setCurrentIndex((i) => (i + 1) % images.length);
 
   return (
-    <div className="page-container">
+    <div className="home-container">
       <div className="home-card">
 
-        {/* Image Carousel */}
+        {/* Carousel */}
         <div className="carousel">
-          <img src={images[currentIndex]} alt="Slide" className="carousel-image" />
-          {/* Previous and Next buttons */}
-          <button className="carousel-button left" onClick={prevSlide}>‹</button>
-          <button className="carousel-button right" onClick={nextSlide}>›</button>
+          <img
+            src={images[currentIndex]}
+            alt={`Slide ${currentIndex + 1}`}
+            className="carousel-image"
+          />
+          <button className="carousel-button left" onClick={prevSlide}>
+            ‹
+          </button>
+          <button className="carousel-button right" onClick={nextSlide}>
+            ›
+          </button>
         </div>
 
-        {/* Text content and navigation buttons */}
+        {/* Content */}
         <div className="home-content">
           <h1 className="home-title">Welcome to NaviNear</h1>
           <p className="home-subtitle">
-            Your go-to solution for seamless navigation inside UToledo's North Engineering building.
+            Your go-to solution for seamless navigation inside UToledo's North
+            Engineering building.
           </p>
 
-          {/* Call-to-action buttons */}
-          <div className="home-buttons">
-            {/* Navigate to Maps page */}
-            <Link to="/maps">
-              <button className="maps-btn">Explore Maps</button>
+          {/* Login Pills */}
+          <div className="login-buttons">
+            <Link to="/login/professor" className="login-btn">
+              <UserCheck className="login-icon" />
+              Professor Login
             </Link>
-
-            {/* Navigate to Office Hours page */}
-            <Link to="/office-hours">
-              <button className="hours-btn">Office Hours</button>
+            <Link to="/login/student" className="login-btn">
+              <GraduationCap className="login-icon" />
+              Student Login
             </Link>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
+export default Home;
