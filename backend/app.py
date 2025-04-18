@@ -14,6 +14,8 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+# ========================
+# Get list of all professors
 @app.route('/api/professors', methods=['GET'])
 def get_professors():
     conn = get_db_connection()
@@ -21,6 +23,8 @@ def get_professors():
     conn.close()
     return jsonify([dict(r) for r in rows])
 
+# ========================
+# Get taken time slots for a professor on a given date
 @app.route('/api/appointments/<int:professor_id>/<date>', methods=['GET'])
 def get_taken_appointments(professor_id, date):
     conn = get_db_connection()
@@ -31,6 +35,8 @@ def get_taken_appointments(professor_id, date):
     conn.close()
     return jsonify([dict(r) for r in rows])
 
+# ========================
+# Create a student appointment
 @app.route('/api/students', methods=['POST'])
 def create_appointment():
     data = request.get_json() or {}
@@ -40,11 +46,29 @@ def create_appointment():
         email = data['student_email']
         slot = data['time_slot']
         reason = data['reason']
+        notes = data.get("additional_notes", "")
+        course = data.get("course_id", "").strip()
     except KeyError:
         return jsonify({"error": "Missing fields"}), 400
 
     conn = get_db_connection()
     try:
+        prof_row = conn.execute(
+            "SELECT course_id FROM Professors WHERE id = ?",
+            (prof,)
+        ).fetchone()
+
+        if not prof_row:
+            conn.close()
+            return jsonify({"error": "Professor not found."}), 404
+
+        valid_courses = [c.strip() for c in (prof_row["course_id"] or "").split(",")]
+        if course not in valid_courses:
+            conn.close()
+            return jsonify({
+                "error": f"Invalid course ID. Valid options: {', '.join(valid_courses)}"
+            }), 400
+
         exists = conn.execute(
             'SELECT 1 FROM Appointment WHERE professor_id = ? AND time_slot = ?',
             (prof, slot)
@@ -54,8 +78,8 @@ def create_appointment():
             return jsonify({"error": "This time slot is already booked."}), 409
 
         conn.execute(
-            'INSERT INTO Appointment (professor_id, student_name, student_email, time_slot, reason) VALUES (?, ?, ?, ?, ?)',
-            (prof, name, email, slot, reason)
+            'INSERT INTO Appointment (professor_id, student_name, student_email, time_slot, reason, additional_notes, course_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            (prof, name, email, slot, reason, notes, course)
         )
         conn.commit()
         conn.close()
@@ -65,17 +89,8 @@ def create_appointment():
         conn.close()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/appointments/professor/<int:professor_id>', methods=['GET'])
-def get_professor_appointments(professor_id):
-    conn = get_db_connection()
-    rows = conn.execute(
-        'SELECT student_name, student_email, time_slot, reason FROM Appointment WHERE professor_id = ?',
-        (professor_id,)
-    ).fetchall()
-    conn.close()
-    return jsonify([dict(row) for row in rows])
-
-
+# ========================
+# Professor login + Student login
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json() or {}
@@ -83,17 +98,16 @@ def login():
     password = data.get("password", "")
 
     conn = get_db_connection()
-    # try Students
+
     user = conn.execute(
-        "SELECT id, username FROM Students WHERE username = ? AND password = ?",
+        "SELECT id, username, name FROM Students WHERE username = ? AND password = ?",
         (username, password)
     ).fetchone()
     role = "student"
 
     if not user:
-        # try Professors
         user = conn.execute(
-            "SELECT id, username FROM Professors WHERE username = ? AND password = ?",
+            "SELECT id, username, name FROM Professors WHERE username = ? AND password = ?",
             (username, password)
         ).fetchone()
         role = "professor"
@@ -106,15 +120,38 @@ def login():
             "user": {
                 "id": user["id"],
                 "username": user["username"],
+                "name": user["name"],
                 "role": role
             }
         }), 200
 
     return jsonify({"error": "Invalid username or password"}), 401
 
+# ========================
+# NEW: Get all appointments for a professor
+@app.route("/api/appointments/professor/<int:professor_id>", methods=["GET"])
+def get_professor_appointments(professor_id):
+    conn = get_db_connection()
+    rows = conn.execute("""
+        SELECT 
+            student_name,
+            student_email,
+            time_slot,
+            reason,
+            additional_notes,
+            course_id
+        FROM Appointment
+        WHERE professor_id = ?
+    """, (professor_id,)).fetchall()
+    conn.close()
+
+    return jsonify([dict(row) for row in rows])
+
+# ========================
 @app.route('/api/ping', methods=['GET'])
 def ping():
     return jsonify({"message": "pong"})
 
+# ========================
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,5 +1,10 @@
 /* src/pages/Maps.css */
-/* Title styling for the map page */
+
+/* ================================
+   Map Page Title
+================================= */
+
+/* Styling for the main title of the map page */
 .map-title {
   font-size: 3rem;          /* Large, prominent title */
   font-weight: 800;         /* Extra bold for emphasis */
@@ -8,7 +13,11 @@
   text-align: center;       /* Center-align the title text */
 }
 
-/* Subtitle styling for the map page */
+/* ================================
+   Map Page Subtitle
+================================= */
+
+/* Styling for the subtitle under the map title */
 .map-subtitle {
   font-size: 1.1rem;        /* Slightly larger than normal text */
   color: #e0e0e0;           /* Light gray for contrast on dark backgrounds */

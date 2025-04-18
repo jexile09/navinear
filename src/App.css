@@ -1,31 +1,44 @@
 /* src/App.css */
-/* Root container styling */
+
+/* ================================
+   Root App Container Styling
+================================= */
+
+/* Root container settings */
 #root {
-  max-width: 1280px; /* Limits the width for readability */
-  margin: 0 auto;     /* Center the root element horizontally */
-  padding: 2rem;      /* Adds inner spacing */
-  text-align: center; /* Center-aligns text by default */
+  max-width: 1280px;      /* Maximum width for layout */
+  margin: 0 auto;         /* Center the root horizontally */
+  padding: 2rem;          /* Outer spacing */
+  text-align: center;     /* Center-align text globally */
 }
 
-/* Logo image styling */
+/* ================================
+   Logo Styling
+================================= */
+
+/* Shared logo image styles */
 .logo {
   height: 6em;
   padding: 1.5em;
-  will-change: filter;                /* Hint to browser for optimization */
-  transition: filter 300ms;           /* Smooth transition for hover effect */
+  will-change: filter;               /* Optimize for filter change */
+  transition: filter 300ms;          /* Smooth glow transition */
 }
 
-/* Hover effect for all logos */
+/* Blue glow on hover */
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa); /* Adds blue glow */
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-/* Specific hover effect for React logo */
+/* React logo glow on hover */
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa); /* React-blue glow */
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* Animation for spinning logo */
+/* ================================
+   Logo Spin Animation
+================================= */
+
+/* Continuous rotation animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,54 +48,59 @@
   }
 }
 
-/* Conditionally apply logo spin animation if user prefers motion */
+/* Enable spin if motion preference allows */
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
 
-/* Generic card padding style */
+/* ================================
+   Card Styling
+================================= */
+
 .card {
   padding: 2em;
 }
 
-/* Subtitle text styling */
+/* Light gray text for documentation hints */
 .read-the-docs {
-  color: #888; /* Light gray text */
+  color: #888;
 }
 
-/* ➕ Added: Better spacing for the Campus Maps section */
+/* ================================
+   Maps Page Styling
+================================= */
 
-/* Wrapper for Maps page */
+/* Wrapper for the entire maps section */
 .maps-wrapper {
-  background-color: #00274D; /* Deep blue background */
-  color: white;              /* White text */
-  padding: 60px 40px;        /* Vertical and horizontal padding */
+  background-color: #00274D;  /* Deep navy background */
+  color: white;               /* White text */
+  padding: 60px 40px;         /* Top/bottom and side padding */
 }
 
-/* Header section container aligned to the left */
+/* Left-aligned header section inside maps */
 .maps-header-left {
-  max-width: 900px;      /* Limit width for readability */
-  margin: 0 auto 30px auto; /* Center horizontally with bottom margin */
+  max-width: 900px;
+  margin: 0 auto 30px auto;   /* Center horizontally, space below */
   text-align: left;
 }
 
-/* Main title for the Maps section */
+/* Main title for maps section */
 .maps-title {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 12px;
 }
 
-/* Instructional paragraph below the title */
+/* Paragraph under title with guidance */
 .maps-instruction {
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 24px;
 }
 
-/* Form container aligned left under maps */
+/* Form under maps, aligned left */
 .maps-form-left {
   max-width: 900px;
   margin: 0 auto;

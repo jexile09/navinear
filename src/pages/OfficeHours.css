@@ -1,48 +1,65 @@
 /* src/pages/OfficeHours.css */
+
+/* ================================
+   Page Wrapper
+================================= */
+
 /* Wrapper for the entire Office Hours page */
 .office-hours-wrapper {
-  background-color: #00274C; /* UToledo primary blue */
+  background-color: #00274C;  /* UToledo primary blue */
   color: white;
-  min-height: 100vh; /* Full height layout */
-  padding: 2rem; /* Outer padding */
+  min-height: 100vh;          /* Full height layout */
+  padding: 2rem;              /* Outer padding */
 }
+
+/* ================================
+   Main Container Layout
+================================= */
 
 /* Main container for content alignment */
 .office-hours-container {
   display: flex;
-  flex-direction: row; /* Arrange child elements side-by-side */
-  justify-content: center; /* Center the content horizontally */
-  align-items: flex-start; /* Align items at the top */
-  gap: 3rem; /* Space between columns */
+  flex-direction: row;        /* Arrange child elements side-by-side */
+  justify-content: center;    /* Center the content horizontally */
+  align-items: flex-start;    /* Align items at the top */
+  gap: 3rem;                  /* Space between columns */
   max-width: 1200px;
-  margin: 0 auto; /* Center container in page */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  margin: 0 auto;             /* Center container in page */
+  flex-wrap: wrap;            /* Allow wrapping on smaller screens */
 }
+
+/* ================================
+   Cards: Professor Info & Student Form
+================================= */
 
 /* Styles for professor list and student form cards */
 .professor-info,
 .student-form {
-  flex: 1; /* Equal width for both sides */
-  min-width: 300px; /* Ensure responsiveness */
-  background: white; /* Card background */
-  color: black; /* Text color */
-  padding: 2rem; /* Inner spacing */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  flex: 1;                    /* Equal width for both sides */
+  min-width: 300px;           /* Ensure responsiveness */
+  background: white;          /* Card background */
+  color: black;               /* Text color */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Headings inside cards */
 .professor-info h2,
 .student-form h2 {
-  color: #00274C; /* UToledo blue for titles */
+  color: #00274C;             /* UToledo blue for titles */
   margin-bottom: 1rem;
 }
+
+/* ================================
+   Form Elements
+================================= */
 
 /* Form input fields, dropdowns, and datepicker styling */
 input,
 select,
 .custom-datepicker {
-  width: 100% !important; /* Full width inside form */
+  width: 100% !important;
   padding: 0.75rem;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
@@ -50,36 +67,62 @@ select,
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
-  background-color: #111; /* Dark input background */
-  color: white; /* Light input text */
+  background-color: #111;     /* Dark input background */
+  color: white;
 }
+
+/* ================================
+   Submit Button
+================================= */
 
 /* Submit button styling */
 button {
-  background-color: #FFCB05; /* UToledo gold */
-  color: #00274C; /* Text in UToledo blue */
+  background-color: #FFCB05;  /* UToledo gold */
+  color: #00274C;             /* UToledo navy text */
   font-weight: bold;
   padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  width: 100%; /* Full-width button */
+  width: 100%;
   font-size: 1rem;
 }
 
 /* Hover effect for submit button */
 button:hover {
-  background-color: #ffd100; /* Slightly brighter yellow on hover */
+  background-color: #ffd100;  /* Slightly brighter yellow on hover */
 }
+
+/* ================================
+   Selected Professor Banner
+================================= */
 
 /* Highlight banner for selected professor */
 .selected-professor-banner {
-  background-color: #e6f4ff; /* Light blue background */
-  color: #00274C; /* Dark blue text */
+  background-color: #e6f4ff;  /* Light blue background */
+  color: #00274C;
   font-weight: bold;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
-  border-left: 5px solid #007acc; /* Accent stripe on the left */
+  border-left: 5px solid #007acc;  /* Accent stripe on the left */
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   Additional Notes Textarea
+================================= */
+.additional-notes {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #111;
+  color: white;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
 }

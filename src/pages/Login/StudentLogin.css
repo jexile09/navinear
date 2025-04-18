@@ -1,119 +1,152 @@
-/* Whole login background */
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #00274C;
-  }
-  
-  /* Card with image + form side by side */
-  .login-card {
-    display: flex;
-    width: 1200px;
-    height: 500px;
-    border-radius: 16px;
-    overflow: hidden;
-    background-color: white;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Vertical divider line */
-  .login-card::before {
-    content: "";
-    position: absolute;
-    left: 70%;
-    top: 0;
-    height: 100%;
-    width: 1px;
-    background-color: #ccc;
-    z-index: 1;
-  }
-  
-  /* Left image side */
-  .login-image {
-    flex: 1;
-    background-image: url("/images/login-full.jpg");
-    background-size: cover;
-    background-position: center;
-  }
-  
-  /* Right form side */
-  .login-form {
-    flex: 1;
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white;
-    z-index: 2;
-  }
-  
-  /* Title */
-  .login-title {
-    font-size: 2.3rem;
-    font-weight: bold;
-    color: #FFC107;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-  
-  /* Subtitle */
-  .login-subtitle {
-    font-size: 1.1rem;
-    color: #444;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  
-  /* Input fields */
-  .login-input {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f5f5f5;
-    color: #000;
-  }
-  
-  /* Button */
-  .login-button {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #FFC107;
-    color: black;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-button:hover {
-    background-color: #e6b800;
-  }
+/* src/pages/Login/StudentLogin.css */
 
-  .password-wrapper {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  
-  .password-input {
-    padding-right: 2.5rem;
-  }
-  
-  .toggle-eye {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #666;
-  }
-  
+/* ================================
+   Whole Login Page Styling
+================================= */
+
+/* Outer container centering the card in viewport */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #00274C; /* Dark blue background */
+}
+
+/* ================================
+ Login Card Styling
+================================= */
+
+/* Main card that contains both image and form */
+.login-card {
+  display: flex;
+  width: 1200px;
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+}
+
+/* Divider line between image and form (at 70%) */
+.login-card::before {
+  content: "";
+  position: absolute;
+  left: 70%;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: #ccc; /* Light gray line */
+  z-index: 1;
+}
+
+/* ================================
+ Left Image Panel
+================================= */
+
+/* Visual branding on the left side */
+.login-image {
+  flex: 1;
+  background-image: url("/images/login-full.jpg"); /* Replace with your own image path */
+  background-size: cover;
+  background-position: center;
+}
+
+/* ================================
+ Right Form Panel
+================================= */
+
+/* Form section layout and spacing */
+.login-form {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  z-index: 2; /* Ensure it's above the divider line */
+}
+
+/* Large bold heading (yellow) */
+.login-title {
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #FFC107; /* Gold */
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Subtitle under title */
+.login-subtitle {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ================================
+ Input Fields Styling
+================================= */
+
+/* Common input field styles */
+.login-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+/* ================================
+ Button Styling
+================================= */
+
+/* Primary login button */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #FFC107; /* Gold */
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for button */
+.login-button:hover {
+  background-color: #e6b800;
+}
+
+/* ================================
+ Password Field Eye Toggle
+================================= */
+
+/* Container to position eye icon inside password field */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Extra right padding so eye icon doesn't overlap text */
+.password-input {
+  padding-right: 2.5rem;
+}
+
+/* Eye icon styling */
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}

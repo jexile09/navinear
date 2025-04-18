@@ -1,13 +1,16 @@
 /* src/index.css */
-/* Global CSS Variables and Defaults */
+
+/* ======================================
+   Global Theme Variables and Defaults
+====================================== */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark; /* Allow system theme adaptation */
-  color: #ffffff; /* Default text color (white for dark mode) */
-  background-color: #00274D; /* Toledo Blue as base background */
+  color-scheme: light dark;       /* Enable automatic light/dark theme switching */
+  color: #ffffff;                 /* Default text color for dark mode */
+  background-color: #00274D;      /* UToledo Blue as default background */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,35 +18,44 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Anchor tag styling */
+/* ======================================
+   Anchor Tag Styling
+====================================== */
 a {
   font-weight: 500;
-  color: #FFCB05; /* Toledo Gold for links */
-  text-decoration: inherit; /* Inherit parent styles */
-}
-a:hover {
-  color: #FFD700; /* Brighter gold on hover */
+  color: #FFCB05;                 /* UToledo Gold */
+  text-decoration: inherit;
 }
 
-/* Base body styles */
+a:hover {
+  color: #FFD700;                 /* Lighter gold on hover */
+}
+
+/* ======================================
+   Body Styling
+====================================== */
 body {
   margin: 0;
   display: flex;
-  place-items: center; /* Center children vertically */
-  min-width: 320px; /* Responsive minimum width */
-  min-height: 100vh; /* Full viewport height */
-  background-color: #00274D; /* Consistent with root bg */
-  color: #ffffff; /* White text */
+  place-items: center;            /* Center content vertically */
+  min-width: 320px;               /* Ensure mobile friendliness */
+  min-height: 100vh;              /* Fill full screen height */
+  background-color: #00274D;      /* Match root background */
+  color: #ffffff;                 /* White text for dark theme */
 }
 
-/* Main heading style */
+/* ======================================
+   Headings
+====================================== */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #FFCB05; /* Toledo Gold for headings */
+  color: #FFCB05;                 /* UToledo Gold */
 }
 
-/* General button styling */
+/* ======================================
+   Button Base Styling
+====================================== */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -51,36 +63,38 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #FFCB05; /* Gold button background */
-  color: #00274D; /* Blue text */
+  background-color: #FFCB05;      /* UToledo Gold */
+  color: #00274D;                 /* UToledo Blue */
   cursor: pointer;
   transition: background-color 0.25s;
 }
 
 /* Button hover effect */
 button:hover {
-  background-color: #FFD700; /* Lighter gold on hover */
+  background-color: #FFD700;      /* Slightly lighter gold */
 }
 
-/* Focus styling for accessibility */
+/* Button focus styling (accessibility) */
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Light mode overrides (based on system preference) */
+/* ======================================
+   Light Mode Overrides (System Preference)
+====================================== */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #00274D;           /* Switch text to blue */
-    background-color: #ffffff; /* Light background */
+    color: #00274D;               /* Switch to blue text */
+    background-color: #ffffff;    /* Light background */
   }
 
   a:hover {
-    color: #00274D; /* Blue on link hover in light mode */
+    color: #00274D;               /* Blue hover in light mode */
   }
 
   button {
-    background-color: #FFCB05; /* Same gold button */
-    color: #00274D;            /* Consistent blue text */
+    background-color: #FFCB05;    /* Maintain UToledo Gold */
+    color: #00274D;
   }
 }

@@ -1,5 +1,9 @@
 /* src/components/MapComponent.css */
-/* Set default layout for full page and prevent horizontal scrolling */
+
+/* ============================================
+   Global Layout Settings
+============================================ */
+
 html,
 body {
   margin: 0;
@@ -9,7 +13,10 @@ body {
   height: 100vh;
 }
 
-/* Main container for the map UI, styled with UToledo's navy blue color */
+/* ============================================
+   Main Map Container Styling
+============================================ */
+
 .map-container {
   background-color: #00274C; /* UToledo Midnight Blue */
   color: white;
@@ -21,82 +28,140 @@ body {
   min-height: 70vh; /* Ensure container fills most of the viewport */
 }
 
-/* Styles applied when map is in fullscreen mode */
+/* Fullscreen override mode */
 .fullscreen-mode {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   padding: 0;
-  background-color: white; /* Override background in fullscreen */
-  z-index: 9999; /* Stay on top of other elements */
+  background-color: white;
+  z-index: 9999;
 }
 
-/* Wrapper for content above the map, such as input forms */
+/* Wrapper for form + controls */
 .map-content-wrapper {
   width: 100%;
-  max-width: 700px; /* Limit width for readability */
+  max-width: 700px;
   margin-bottom: 2rem;
 }
 
-/* Styles for form controls section */
+/* ============================================
+   Form Controls Styling
+============================================ */
+
 .form-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem; /* Space between controls */
+  gap: 1rem;
 }
 
-/* Style for dropdown/select box */
 .select-box {
   width: 100%;
 }
 
-/* Button to trigger path-finding logic */
 .find-path-button {
-  background-color: #FFCB05; /* UToledo Gold */
-  color: #00274C;            /* UToledo Blue text */
+  background-color: #FFCB05;
+  color: #00274C;
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
   width: auto;
-  max-width: 200px;       /* Prevent overly wide button */
+  max-width: 200px;
   display: block;
-  margin: 0 auto;         /* Center the button horizontally */
+  margin: 0 auto;
 }
 
-/* Hover effect for path-finding button */
 .find-path-button:hover {
-  background-color: #ffd100; /* Slightly lighter gold on hover */
+  background-color: #ffd100;
 }
 
-/* Container for the visual map display */
+/* ============================================
+   Map Display Area Styling
+============================================ */
+
 .map-view {
   width: 100%;
   max-width: 1200px;
   border-radius: 20px;
-  overflow: hidden; /* Hide overflow for rounded corners */
+  overflow: hidden;
   cursor: pointer;
 }
 
-/* Button to exit fullscreen mode, styled like a floating "X" */
 .exit-fullscreen {
-  position: absolute;        /* Position relative to the map-view container */
-  top: 1rem;                 
-  right: 1rem;               
-  background: rgba(255, 255, 255, 0.9); 
-  color: #00274C;            
-  font-size: 1.5rem;        
-  font-weight: bold;         
-  border: none;              
-  border-radius: 50%;        /* Make the button circular */
-  padding: 0.5rem 0.8rem;    
-  cursor: pointer;           /* Pointer cursor on hover */
-  z-index: 10000;            
-  width: auto;               
-  height: auto;             
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #00274C;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* ============================================
+   Accessibility Checkbox Styling
+============================================ */
+
+.accessibility-checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  padding-left: 2.2rem;
+  color: white;
+}
+
+.accessibility-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+
+.accessibility-checkbox .checkmark {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border: 2px solid #FFCB05;
+  border-radius: 4px;
+}
+
+.accessibility-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* When checkbox is checked, show the tick */
+.accessibility-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Tick styling */
+.accessibility-checkbox .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #FFCB05;
+  border-width: 0 2px 2px;
+  transform: rotate(45deg);
+}
