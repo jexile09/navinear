@@ -126,3 +126,14 @@ button:hover {
   min-height: 100px;
   box-sizing: border-box;
 }
+
+/* ================================
+   Force DatePicker to full‑width
+================================ */
+.datepicker-wrapper,
+.react-datepicker-wrapper,
+.react-datepicker-wrapper .react-datepicker__input-container,
+.react-datepicker__input-container input {
+  width: 100% !important;
+  box-sizing: border-box;
+}

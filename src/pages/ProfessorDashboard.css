@@ -1,8 +1,8 @@
 /* src/pages/ProfessorDashboard.css */
 
 /* ================================
-   Professor Dashboard Container
-================================= */
+   Dashboard overall container
+================================ */
 .dashboard-container {
   padding: 2rem;
   background-color: #00274C;
@@ -12,40 +12,89 @@
 }
 
 /* ================================
-   Dashboard Title Styling
-================================= */
+   Title
+================================ */
 .dashboard-title {
   text-align: center;
   color: #FFD200;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 2rem;
   font-weight: 700;
 }
 
 /* ================================
-   Appointments Table Styling
-================================= */
-.appointment-table {
-  width: 90%;
-  margin: 0 auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: white;
-  color: #222;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+   Filter bar: stack vertically
+================================ */
+.filter-bar {
+  display: flex;
+  flex-direction: column;   /* stack the two controls */
+  align-items: flex-start;  /* left-align everything */
+  gap: 0rem;              /* space between rows (tighter) */
+  margin-bottom: 1rem;
+  padding: 0 2rem;
 }
 
-/* Table Header and Cells */
+/* ================================
+   Each filter group (label + control)
+================================ */
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ================================
+   Labels in the filter bar
+================================ */
+.filter-label {
+  font-size: 1rem;          /* unified smaller size */
+  white-space: nowrap;      /* keep text on one line */
+}
+
+/* ================================
+   Course dropdown styling
+================================ */
+.filter-select {
+  padding: 0.5rem 1rem;     /* more vertical padding */
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  background-color: white;
+  color: #00274C;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ================================
+   Checkbox styling
+================================ */
+.filter-group input[type="checkbox"] {
+  transform: scale(1.1);    /* slightly reduced size */
+  cursor: pointer;
+}
+
+/* ================================
+   Appointment table styling
+================================ */
+.appointment-table {
+  width: 95%;
+  margin: 0 auto;
+  background-color: white;
+  color: #222;
+  border-radius: 12px;
+  overflow: hidden;  
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
 .appointment-table th,
 .appointment-table td {
   padding: 1rem 1.2rem;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
-/* Header background color */
 .appointment-table thead {
   background-color: #003366;
 }
@@ -53,20 +102,43 @@
 .appointment-table th {
   color: white;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* Table Row Styling */
 .appointment-table tr {
   border-bottom: 1px solid #ddd;
 }
 
-/* Hover effect */
 .appointment-table tbody tr:hover {
   background-color: #f3f3f3;
   transition: background-color 0.2s ease-in-out;
 }
 
-.appointment-table td {
-  font-size: 1rem;
+/* ================================
+   No-data row
+================================ */
+.no-data {
+  text-align: center;
+  padding: 1rem;
+  color: #555;
+}
+
+/* ================================
+   Responsive tweaks
+================================ */
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2.2rem;
+  }
+  .filter-bar {
+    padding: 0 1rem;
+  }
+  .appointment-table {
+    width: 100%;
+    font-size: 0.95rem;
+  }
+  .appointment-table th,
+  .appointment-table td {
+    padding: 0.75rem;
+  }
 }
