@@ -41,43 +41,54 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ## 🗂️ Repository Structure
 
+```
 NAVINEAR/
 │
-├── backend/ # Flask server + SQLite database
-│ ├── app.py # API endpoints
-│ └── campus_navigator.db # SQLite database file
+├── backend/                     # Flask server + SQLite database
+│   ├── app.py                   # API endpoints
+│   └── campus_navigator.db      # SQLite database file
 │
-├── public/ # Static assets served by Vite
-│ └── images/ # Logos, map tiles, etc.
+├── public/                      # Static assets served by Vite
+│   └── images/                  # Logos, map tiles, etc.
 │
-└── src/ # Front-end source
-├── components/ # Shared React pieces
-│ ├── ColorScheme.ts
-│ ├── Footer.tsx
-│ ├── Header.tsx
-│ ├── MapComponent.tsx/.css
-│ ├── Navibar.tsx/.css
-│ └── ProtectedRoute.tsx
-│
-├── pages/ # Route-level views
-│ ├── Login/  
-│ │ ├── ProfessorLogin.tsx/.css # Professor login
-│ │ └── StudentLogin.tsx/.css # Student login
-│ ├── Home.tsx/.css
-│ ├── Maps.tsx/.css
-│ ├── OfficeHours.tsx/.css
-│ └── ProfessorDashboard.tsx/.css
-│
-├── App.tsx # Top-level router & layout
-├── index.css # Global styles
-└── main.tsx # React entry point
+├── src/                         # Front-end source
+│   ├── components/              # Shared React components
+│   │   ├── ColorScheme.ts
+│   │   ├── Footer.tsx
+│   │   ├── Header.tsx
+│   │   ├── MapComponent.tsx
+│   │   ├── MapComponent.css
+│   │   ├── Navibar.tsx
+│   │   ├── Navibar.css
+│   │   └── ProtectedRoute.tsx
+│   │
+│   ├── pages/                   # Route-level views
+│   │   ├── Login/
+│   │   │   ├── ProfessorLogin.tsx
+│   │   │   ├── ProfessorLogin.css
+│   │   │   ├── StudentLogin.tsx
+│   │   │   └── StudentLogin.css
+│   │   ├── Home.tsx
+│   │   ├── Home.css
+│   │   ├── Maps.tsx
+│   │   ├── Maps.css
+│   │   ├── OfficeHours.tsx
+│   │   ├── OfficeHours.css
+│   │   ├── ProfessorDashboard.tsx
+│   │   └── ProfessorDashboard.css
+│   │
+│   ├── App.tsx                  # Top-level router & layout
+│   ├── index.css                # Global styles
+│   └── main.tsx                 # React entry point
+```
 
-Prerequisites
+
+```Prerequisites
 • Node.js v16 or higher (required to run and build the frontend)
 • npm (comes with Node.js, used to manage packages)
 • Python 3.9 or higher (required for the Flask backend)
 • A modern web browser (e.g., Chrome, Firefox, or Edge for app usage and testing)
-
+```
 ## 🚀 Getting Started
 
 ### 1. Backend
