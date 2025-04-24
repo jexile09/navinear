@@ -10,18 +10,18 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ## 📚 Table of Contents
 
-1. [Features](#features) ✅
-2. [🧰Tech Stack](#tech-stack)
-3. [🗂️Repository Structure](#repository-structure)
-4. [🔧Prerequisites](#prerequisites)
-5. [🚀 Getting Started](#getting-started)
+1. [Features](#features)
+2. [Tech Stack](#tech-stack)
+3. [Repository Structure](#repository-structure)
+4. [Prerequisites](#prerequisites)
+5. [Getting Started](#getting-started)
 6. [API Reference](#api-reference)
-7. [⚙️ Environment Variables](#environment-variables)
-8. [📄License](#license)
+7. [Environment Variables](#environment-variables)
+8. [License](#license)
 
 ---
 
-## Features ✅
+## Features 
 
 - **Interactive Campus Map** with building labels and accessibility features powered by Mappedin SDK
 - **Role-based Authentication** for Students and Professors
@@ -30,7 +30,7 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **Backend**: Python, Flask, Flask-CORS, SQLite
 - **Frontend**: Vite, React, TypeScript, React Router, React-DatePicker
@@ -39,7 +39,7 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ---
 
-## 🗂️ Repository Structure
+## Repository Structure
 
 ```
 NAVINEAR/
@@ -83,7 +83,7 @@ NAVINEAR/
 ```
 ---
 
-## 🔧 Prerequisites
+## Prerequisites
 ```
 • Node.js v16 or higher (required to run and build the frontend)
 • npm (comes with Node.js, used to manage packages)
@@ -93,7 +93,7 @@ NAVINEAR/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Backend
 
@@ -125,7 +125,7 @@ Use the provided login credentials or create new ones in the database.
 
 ---
 
-## API Reference 📡
+## API Reference 
 
 - `GET /api/professors` – Retrieve all professors  
 - `GET /api/appointments/<professor_id>/<date>` – Get booked slots for a date  
@@ -135,7 +135,7 @@ Use the provided login credentials or create new ones in the database.
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 ```env
 FLASK_APP=app.py
@@ -146,7 +146,7 @@ CORS_ORIGINS=http://localhost:5173
 
 ---
 
-## 📄 License
+## License
 
 **MIT License**  
 This project is licensed under the terms of the MIT License.
