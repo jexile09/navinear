@@ -81,14 +81,18 @@ NAVINEAR/
 │   ├── index.css                # Global styles
 │   └── main.tsx                 # React entry point
 ```
+---
 
-## Prerequisites
+## 🔧 Prerequisites
 ```
 • Node.js v16 or higher (required to run and build the frontend)
 • npm (comes with Node.js, used to manage packages)
 • Python 3.9 or higher (required for the Flask backend)
 • A modern web browser (e.g., Chrome, Firefox, or Edge for app usage and testing)
 ```
+
+---
+
 # 🚀 Getting Started
 
 ## 1. Backend
