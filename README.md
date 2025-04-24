@@ -10,7 +10,7 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ## 📚 Table of Contents
 
-1. [Features](#features)
+1. [Features](#features) ✅
 2. [🧰Tech Stack](#tech-stack)
 3. [🗂️Repository Structure](#repository-structure)
 4. [🔧Prerequisites](#prerequisites)
