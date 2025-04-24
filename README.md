@@ -2,15 +2,15 @@
 ## Navigation made easy!
 This website is used to help you with your navigation needs for North Engineering here at the University of Toledo Engineering campus.
 
-**naviNear** is a fullstack web application designed to assist students and faculty at the University of Toledo in navigating the North Engineering Building and managing professor office hour appointments. The system provides two core functionalities: an indoor route-finding interface powered by the Mappedin API, and an appointment scheduling platform that allows students to book meetings with professors based on their published availability.
+**naviNear** is a full-stack web application designed to assist students and faculty at the University of Toledo in navigating the North Engineering Building and managing professor office hour appointments. The system provides two core functionalities: an indoor route-finding interface powered by the Mappedin API, and an appointment scheduling platform that allows students to book meetings with professors based on their published availability.
 
-The interactive map feature enables users to search for specific classrooms, labs, or faculty offices and view guided navigation paths within the building, making it easier to move through complex layouts with confidence. The appointment system includes availability checking, conflict prevention by disabling already-booked time slots, and integration with a backend database for secure and reliable scheduling. Professors can manage their availability through a personalized dashboard, while students can filter appointments by course, reason for meeting, and date.
+The interactive map feature enables users to search for specific classrooms, labs, or faculty offices and view guided navigation paths within the building, making it easier to confidently move through complex layouts. The appointment system includes availability checking, conflict prevention by disabling already-booked time slots, and integration with a backend database for secure and reliable scheduling. Professors can manage their availability through a personalized dashboard, while students can filter appointments by course, reason for meeting, and date.
 
 ---
 
 ## 📚 Table of Contents
 
-1. [Features](#features)
+1. [✅ Features](#features)
 2. [Tech Stack](#tech-stack)
 3. [Repository Structure](#repository-structure)
 4. [Prerequisites](#prerequisites)
