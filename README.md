@@ -93,9 +93,9 @@ NAVINEAR/
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
-## 1. Backend
+### 1. Backend
 
 ```bash
 cd backend
@@ -103,14 +103,14 @@ pip install Flask flask-cors        # Install Flask & dependencies
 flask run                           # Start the API server (default: http://127.0.0.1:5000)
 ```
 
-## 2. Frontend
+### 2. Frontend
 
 ```bash
 npm install        # Install dependencies
 npm run dev        # Start the dev server (default: http://localhost:5173)
 ```
 
-## 3. Accessing the Webpage
+### 3. Accessing the Webpage
 
 Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the application.  
 Use the provided login credentials or create new ones in the database.
