@@ -10,18 +10,18 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ## 📚 Table of Contents
 
-1. [✅ Features](#features)
+1. [Features](#features)
 2. [🧰Tech Stack](#tech-stack)
 3. [🗂️Repository Structure](#repository-structure)
 4. [🔧Prerequisites](#prerequisites)
 5. [🚀 Getting Started](#getting-started)
-6. [📡API Reference](#api-reference)
+6. [API Reference](#api-reference)
 7. [⚙️ Environment Variables](#environment-variables)
 8. [📄License](#license)
 
 ---
 
-## ✅ Features
+## Features ✅
 
 - **Interactive Campus Map** with building labels and accessibility features powered by Mappedin SDK
 - **Role-based Authentication** for Students and Professors
@@ -125,7 +125,7 @@ Use the provided login credentials or create new ones in the database.
 
 ---
 
-## 📡 API Reference
+## API Reference 📡
 
 - `GET /api/professors` – Retrieve all professors  
 - `GET /api/appointments/<professor_id>/<date>` – Get booked slots for a date  
