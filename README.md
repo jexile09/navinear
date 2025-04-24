@@ -89,42 +89,60 @@ NAVINEAR/
 • Python 3.9 or higher (required for the Flask backend)
 • A modern web browser (e.g., Chrome, Firefox, or Edge for app usage and testing)
 ```
-## 🚀 Getting Started
+# 🚀 Getting Started
 
-### 1. Backend
+## 1. Backend
 
 ```bash
 cd backend
 pip install Flask flask-cors        # Install Flask & dependencies
 flask run                           # Start the API server (default: http://127.0.0.1:5000)
-
-2. Frontend:
-   • npm install # Install dependencies
-   • npm run dev # Start the dev server (default: http://localhost:5173)
-
-3. Accessing the Webpage
-   Open your browser and navigate to http://localhost:5173 to view the application.
-   Use the provided login credentials or create new ones in the database, for example:
-   a. Professor Login
-   • Username: eassaad
-   • Password: TheUniversityofToledo123
-   b. Student Login
-   • Username: sng
-   • Password: TheUniversityofToledo123
-
-API Reference
-• GET /api/professors - Retrieve all professors.
-• GET /api/appointments/<professor_id>/<date> - Get booked slots for a date.
-• POST /api/students - Create a new appointment.
-• GET /api/appointments/professor/<professor_id> - Get all appointments for a professor.
-• POST /api/login - Authenticate user (student or professor).
-
-Environment Variables
-• FLASK_APP = app.py
-• FLASK_ENV = development
-• DATABASE_URL = sqlite:///campus_navigator.db
-• CORS_ORIGINS = http://localhost:5173
-
-License
-MIT License
 ```
+
+## 2. Frontend
+
+```bash
+npm install        # Install dependencies
+npm run dev        # Start the dev server (default: http://localhost:5173)
+```
+
+## 3. Accessing the Webpage
+
+Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the application.  
+Use the provided login credentials or create new ones in the database.
+
+### a. Professor Login
+- **Username:** `eassaad`
+- **Password:** `TheUniversityofToledo123`
+
+### b. Student Login
+- **Username:** `sng`
+- **Password:** `TheUniversityofToledo123`
+
+---
+
+## 📡 API Reference
+
+- `GET /api/professors` – Retrieve all professors  
+- `GET /api/appointments/<professor_id>/<date>` – Get booked slots for a date  
+- `POST /api/students` – Create a new appointment  
+- `GET /api/appointments/professor/<professor_id>` – Get all appointments for a professor  
+- `POST /api/login` – Authenticate user (student or professor)
+
+---
+
+## ⚙️ Environment Variables
+
+```env
+FLASK_APP=app.py
+FLASK_ENV=development
+DATABASE_URL=sqlite:///campus_navigator.db
+CORS_ORIGINS=http://localhost:5173
+```
+
+---
+
+## 📄 License
+
+**MIT License**  
+This project is licensed under the terms of the MIT License.
