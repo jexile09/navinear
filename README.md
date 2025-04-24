@@ -11,13 +11,13 @@ The interactive map feature enables users to search for specific classrooms, lab
 ## 📚 Table of Contents
 
 1. [✅ Features](#features)
-2. [Tech Stack](#tech-stack)
-3. [Repository Structure](#repository-structure)
-4. [Prerequisites](#prerequisites)
-5. [Getting Started](#getting-started)
-6. [API Reference](#api-reference)
-7. [Environment Variables](#environment-variables)
-8. [License](#license)
+2. [🧰Tech Stack](#tech-stack)
+3. [🗂️Repository Structure](#repository-structure)
+4. [🔧Prerequisites](#prerequisites)
+5. [🚀 Getting Started](#getting-started)
+6. [📡API Reference](#api-reference)
+7. [⚙️ Environment Variables](#environment-variables)
+8. [📄License](#license)
 
 ---
 
@@ -115,11 +115,11 @@ npm run dev        # Start the dev server (default: http://localhost:5173)
 Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to view the application.  
 Use the provided login credentials or create new ones in the database.
 
-### a. Professor Login
+#### a. Professor Login
 - **Username:** `eassaad`
 - **Password:** `TheUniversityofToledo123`
 
-### b. Student Login
+#### b. Student Login
 - **Username:** `sng`
 - **Password:** `TheUniversityofToledo123`
 
