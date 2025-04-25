@@ -6,7 +6,11 @@ This website is used to help you with your navigation needs for North Engineerin
 
 The interactive map feature enables users to search for specific classrooms, labs, or faculty offices and view guided navigation paths within the building, making it easier to confidently move through complex layouts. The appointment system includes availability checking, conflict prevention by disabling already-booked time slots, and integration with a backend database for secure and reliable scheduling. Professors can manage their availability through a personalized dashboard, while students can filter appointments by course, reason for meeting, and date.
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/fb9a1bc03f4944deaf81f979fc58bdff?sid=67d79a3c-5109-4211-bd03-4ef4a8fe0b24" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+<div style="position: relative; padding-bottom: 56.25%; height: 0;">
+  <iframe src="https://www.loom.com/embed/fb9a1bc03f4944deaf81f979fc58bdff?sid=67d79a3c-5109-4211-bd03-4ef4a8fe0b24" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+    
+  </iframe>
+  </div>
 
 ---
 
