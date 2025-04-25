@@ -8,16 +8,6 @@ The interactive map feature enables users to search for specific classrooms, lab
 
 ## Video Demo
 Link: https://www.loom.com/embed/fb9a1bc03f4944deaf81f979fc58bdff?sid=67d79a3c-5109-4211-bd03-4ef4a8fe0b24
-<div>
-  <iframe
-    src="https://www.loom.com/embed/fb9a1bc03f4944deaf81f979fc58bdff?sid=67d79a3c-5109-4211-bd03-4ef4a8fe0b24"
-    frameborder="0"
-    webkitallowfullscreen
-    mozallowfullscreen
-    allowfullscreen
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-  </iframe>
-</div>
 
 
 ---
